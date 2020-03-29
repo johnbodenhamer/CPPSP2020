@@ -6,7 +6,7 @@ void process();
 void sumOfIntegers();
 int recursiveSumOfIntegers(int num);
 void sumOfOddsOrEvens();
-int recursiveSumOfOddsOrEvens(int num);
+int recursiveSumOfOddsOrEvens(int num, int input);
 
 int main()
 {
