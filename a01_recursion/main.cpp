@@ -98,7 +98,7 @@ void sumOfIntegers()
     cin >> input;
 
     result = recursiveSumOfIntegers(input);
-    cout << result;
+    cout << result << endl;
 }
 
 int recursiveSumOfIntegers(int num)
