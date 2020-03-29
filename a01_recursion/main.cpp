@@ -5,6 +5,8 @@ char getChoice();
 void process();
 void sumOfIntegers();
 int recursiveSumOfIntegers(int num);
+void sumOfOddsOrEvens();
+int recursiveSumOfOddsOrEvens(int num);
 
 int main()
 {
@@ -68,7 +70,7 @@ void process()
         {
             case '1' : sumOfIntegers();
                 break;
-            case '2' : cout << "2 \n";
+            case '2' : sumOfOddsOrEvens();
                 break;
             case '3' : cout << "3 \n";
                 break;
@@ -98,10 +100,42 @@ void sumOfIntegers()
     cin >> input;
 
     result = recursiveSumOfIntegers(input);
-    cout << result << endl;
+    cout << "The sum of all integers = " << result << endl;
 }
 
 int recursiveSumOfIntegers(int num)
+{
+    if (num == 0 || num == 1)
+    {
+        return 1;
+    }
+
+    return num + recursiveSumOfIntegers(num - 1);
+}
+
+void sumOfOddsOrEvens()
+{
+    int input,
+            result;
+
+    cout << "Enter an integer" << endl;
+
+    cin >> input;
+
+    if (input % 2 == 0)
+    {
+        cout << "even";
+    }
+    else
+    {
+        cout << "odd";
+    }
+
+//    result = recursiveSumOfOddsOrEvens(input);
+    cout << "The sum of odds or evens integers = " << result << endl;
+}
+
+int recursiveSumOfOddsOrEvens(int num)
 {
     if (num == 0 || num == 1)
     {
