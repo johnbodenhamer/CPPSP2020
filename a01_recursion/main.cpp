@@ -144,5 +144,5 @@ int recursiveSumOfOddsOrEvens(int num, int input)
         return input;
     }
 
-    return num + recursiveSumOfOddsOrEvens(num + 2);
+    return num + recursiveSumOfOddsOrEvens(num + 2, input);
 }
