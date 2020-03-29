@@ -125,12 +125,12 @@ void sumOfOddsOrEvens()
     if (input % 2 == 0)
     {
         cout << "even";
-        result = recursiveSumOfOddsOrEvens(2, input)
+        result = recursiveSumOfOddsOrEvens(2, input);
     }
     else
     {
         cout << "odd";
-        result = recursiveSumOfOddsOrEvens(1, input)
+        result = recursiveSumOfOddsOrEvens(1, input);
     }
 
     cout << "The sum of odds or evens integers = " << result << endl;
