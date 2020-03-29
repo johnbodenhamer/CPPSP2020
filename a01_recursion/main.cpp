@@ -1,10 +1,14 @@
 #include <iostream>
+using namespace std;
 
 char getChoice();
+void process();
+int sumOfIntegers();
+int recursiveSumOfIntegers(int num);
 
-
-int main() {
-    std::cout << "Hello, World!!!" << std::endl;
+int main()
+{
+    process();
     return 0;
 }
 
@@ -62,7 +66,7 @@ void process()
 
         switch (choice)
         {
-            case '1' : cout << "1 \n";
+            case '1' : sumOfIntegers();
                 break;
             case '2' : cout << "2 \n";
                 break;
@@ -84,3 +88,22 @@ void process()
     while (choice != '9');
 }
 
+int sumOfIntegers()
+{
+    int input;
+    cout << "Enter an integer" << endl;
+
+    cin >> input;
+
+    return recursiveSumOfIntegers(input);
+}
+
+int recursiveSumOfIntegers(int num)
+{
+    if (num == 0 || num == 1)
+    {
+        return 1;
+    }
+
+    return num + recursiveSumOfIntegers(num - 1);
+}
