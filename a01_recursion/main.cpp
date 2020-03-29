@@ -3,7 +3,7 @@ using namespace std;
 
 char getChoice();
 void process();
-int sumOfIntegers();
+void sumOfIntegers();
 int recursiveSumOfIntegers(int num);
 
 int main()
@@ -88,14 +88,17 @@ void process()
     while (choice != '9');
 }
 
-int sumOfIntegers()
+void sumOfIntegers()
 {
-    int input;
+    int input,
+        result;
+
     cout << "Enter an integer" << endl;
 
     cin >> input;
 
-    return recursiveSumOfIntegers(input);
+    result = recursiveSumOfIntegers(input);
+    cout << result;
 }
 
 int recursiveSumOfIntegers(int num)
