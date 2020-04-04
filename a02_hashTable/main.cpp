@@ -29,10 +29,15 @@ int main() {
 
         productTable.insert(p);
 
-        cout << endl;
+        cout << p.productDescription << endl;
     }
 
     fileIn.close();
+
+    cout << "Enter a product's UPC to locate(0 to end)" << endl;
+    cin >> p.upc;
+
+//    productTable.(p);
 
     return 0;
 }

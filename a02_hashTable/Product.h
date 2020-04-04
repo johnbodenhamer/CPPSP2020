@@ -11,7 +11,7 @@ struct Product {
     double productCost;
     double productInventory;
 
-    friend std::ostream & operator << (std::ostream & out, const Product & data);
+    friend ostream & operator << (ostream & out, const Product & data);
 };
 
 ostream & operator << (ostream & out, const Product & data)
