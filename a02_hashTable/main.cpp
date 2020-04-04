@@ -30,10 +30,10 @@ int main() {
         p.productDescription = cStr;
         getline(fileIn, cStr, ',');
         p.productCost = stod(cStr);
-        getline(fileIn, cStr, ',');
+        getline(fileIn, cStr, '\n');
         p.productInventory = stod(cStr);
 
-//        productTable.insert(p);
+        productTable.insert(p);
 
         cout << p.productDescription << endl;
     }
