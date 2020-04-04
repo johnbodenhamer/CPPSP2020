@@ -15,10 +15,10 @@ public:
 	List( const List<DT> & );
 	~List( );
 	List<DT> & operator =( const List<DT> & );
-    friend ostream & operator <<(ostream& os, const DT & element);
+//    friend ostream & operator <<(ostream& os, const DT & element);
 	void insert( const DT &); // no current position after use
 	bool first( DT & );	  // returns first element of list in listEl
-										  // and current position is set to this element; 
+										  // and current position is set to this element;
 										  // if list is empty, returns false and there is
 										  // no current position; otherwise, returns true
 	inline bool getNext( DT & );	  // retrieves the next element of a linked list
@@ -26,9 +26,9 @@ public:
 										  // by first or getNext functions and returns
 										  // it in listEl;
 										  // current position is set to this element.
-										  // if no element exists at this position, 
-										  // getNext returns false and there is no 
-										  // current position; returns true otherwise	
+										  // if no element exists at this position,
+										  // getNext returns false and there is no
+										  // current position; returns true otherwise
 	bool find ( const DT & );  // returns true if element is found
 									      // returns false if element is not found
 										  // if found, found element becomes current
@@ -44,7 +44,7 @@ public:
 	bool remove(const DT);
 private:
 	Node<DT> *start;
-	Node<DT> *current;			  // points to node at current position	
+	Node<DT> *current;			  // points to node at current position
 	inline void deepCopy( const List<DT> & );
 	static int collisionCounter;
 };
@@ -83,15 +83,8 @@ List<DT> & List<DT>::operator =( const List<DT> & rlist )
 	return *this;
 }
 
-template <class DT>
-ostream & operator <<(ostream& os, const DT & element)
-{
-    os << element << endl;
-    return os;
-}
-
 // inserts at the beginning of the linked list
-// no current position after use		
+// no current position after use
 template <class DT>
 void List<DT>::insert( const DT & element )
 {
@@ -104,22 +97,23 @@ void List<DT>::insert( const DT & element )
 	{
 		cout<<"There was a collision loading ";
 		cout<<element<<endl;
-		cout<<"It collided with "<<start->info<<endl;
+		cout<<"It collided with ";
+		cout<<start->info<<endl;
 		collisionCounter++;
 	}
 	else
 		cout<<"There was no collision loading "<<element<<endl;
 	start = newNode;
-	
-}	
 
-// returns first element of list in listEl and current position is set to this element; 
-// if list is empty, returns false and there is no current position; 
+}
+
+// returns first element of list in listEl and current position is set to this element;
+// if list is empty, returns false and there is no current position;
 // otherwise, returns true
 template <class DT>
 bool List<DT>::first( DT & listEl )
 {
-	if ( start == NULL ) 
+	if ( start == NULL )
 		return false;
 
 	current = start;
@@ -130,12 +124,12 @@ bool List<DT>::first( DT & listEl )
 // retrieves the next element of a linked list beyond the last element that was retrieved
 // by first or getNext functions and returns it in listEl;
 // current position is set to this element.
-// if no element exists at this position, getNext returns false and there is no 
-// current position; returns true otherwise	
+// if no element exists at this position, getNext returns false and there is no
+// current position; returns true otherwise
 template <class DT>
-inline bool List<DT>::getNext( DT & listEl )				  
+inline bool List<DT>::getNext( DT & listEl )
 {
-	if ( current == NULL ) 
+	if ( current == NULL )
 		return false;
 	if ( current->next == NULL ) {
 		current = NULL;
@@ -149,7 +143,7 @@ inline bool List<DT>::getNext( DT & listEl )
 
 
 // returns true if element is found; returns false if element is not found
-// if found, found element becomes current position in list; 
+// if found, found element becomes current position in list;
 // if not found, there is no current position
 template <class DT>
 bool List<DT>::find( const DT & element )
@@ -158,9 +152,9 @@ bool List<DT>::find( const DT & element )
 	DT item;
 	if ( !first( item ) )
 		return false;
-	do 
+	do
 	{
-		if ( item == element ) 
+		if ( item == element )
 			return true;
 	}
 	while ( getNext( item ) );
@@ -169,7 +163,7 @@ bool List<DT>::find( const DT & element )
 }
 
 // returns true if element is found; returns false if element is not found
-// if found, found element becomes current position in list; 
+// if found, found element becomes current position in list;
 // if not found, there is no current position
 template <class DT>
 bool List<DT>::retrieve( DT & element )
@@ -187,13 +181,13 @@ bool List<DT>::retrieve( DT & element )
 }
 
 template <class DT>
-bool List<DT>::isEmpty( ) const				  
+bool List<DT>::isEmpty( ) const
 {
 	return start == NULL;
 }
 
 template <class DT>
-void List<DT>::makeEmpty( )					  
+void List<DT>::makeEmpty( )
 {
 	while ( start != NULL ) {
 		current = start;
@@ -265,4 +259,3 @@ void List<DT>::resetCollisionCounter()
 
 template <class DT>
 int List<DT>::collisionCounter=0;
-

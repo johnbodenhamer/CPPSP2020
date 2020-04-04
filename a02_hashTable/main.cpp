@@ -1,17 +1,11 @@
 #include <iostream>
+#include <fstream>
 #include <string>
-#include<istream>
-#include<fstream>
+
 using namespace std;
 
+#include "Product.h"
 #include "HashTable.h"
-
-struct Product {
-    string upc;
-    string productDescription;
-    double productCost;
-    double productInventory;
-};
 
 int hf1(const Product &);
 const int SIZE = 6;
@@ -35,7 +29,7 @@ int main() {
 
         productTable.insert(p);
 
-        cout << p.productDescription << endl;
+        cout << endl;
     }
 
     fileIn.close();
@@ -49,4 +43,3 @@ int hf1(const Product & product)
     int index = int(0.618033 * upcInt) % SIZE;
     return index;
 }
-
