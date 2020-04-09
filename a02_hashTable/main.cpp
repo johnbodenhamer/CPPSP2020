@@ -13,10 +13,12 @@ const int SIZE = 6;
 int main() {
     HashTable<Product> productTable(hf1, SIZE);
     Product p;
+    List<int> intList();
     string fileName = "Inventory.csv";
     ifstream fileIn;
     fileIn.open(fileName);
     string cStr;
+    string upc;
 
     while(getline(fileIn, p.upc, ','))
     {
@@ -27,17 +29,34 @@ int main() {
         getline(fileIn, cStr, '\n');
         p.productInventory = stod(cStr);
 
-        productTable.insert(p);
+        cout << p << " is being added" << endl;
 
-        cout << p.productDescription << endl;
+        productTable.insert(p);
+        cout << "------------------------------------------------------------------------------------------------------"
+        <<  endl;
     }
 
     fileIn.close();
 
-    cout << "Enter a product's UPC to locate(0 to end)" << endl;
-    cin >> p.upc;
+    do {
+        cout << "Enter a product's UPC to locate(0 to end)" << endl;
+        cin >> p.upc;
+        cout << "Will Search For " << p.upc << endl;
+        if (productTable.retrieve(p))
+        {
+            cout << "retrieved from hashtable" << p << endl;
+        }
+        else {
+            cout << "Could not find " << p.upc;
+        }
 
-//    productTable.(p);
+
+
+        cout << "------------------------------------------------------------------------------------------------------"
+             <<  endl;
+    } while (p.upc != "0");
+
+    cout << "The number of collisions is " << intList.collisionCounter();
 
     return 0;
 }

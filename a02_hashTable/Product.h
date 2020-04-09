@@ -12,11 +12,18 @@ struct Product {
     double productInventory;
 
     friend ostream & operator << (ostream & out, const Product & data);
+    bool operator  == (const Product & data) const;
 };
 
 ostream & operator << (ostream & out, const Product & data)
 {
-  out << data.upc << " " << data.productDescription;
+  out << data.upc << " " << data.productDescription << " " << data.productCost << " " << data.productInventory;
   return out;
 }
+
+bool Product :: operator  == (const Product & data) const
+{
+  return (this -> upc == data.upc);
+}
+
 #endif
