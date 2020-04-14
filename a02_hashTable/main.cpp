@@ -13,7 +13,6 @@ const int SIZE = 6;
 int main() {
     HashTable<Product> productTable(hf1, SIZE);
     Product p;
-    List<int> intList();
     string fileName = "Inventory.csv";
     ifstream fileIn;
     fileIn.open(fileName);
@@ -39,11 +38,19 @@ int main() {
     fileIn.close();
 
     do {
-        cout << "Enter a product's UPC to locate(0 to end)" << endl;
+        cout << "Enter a product's UPC to locate(0 to end or X to delete)" << endl;
         cin >> p.upc;
-        cout << "Will Search For " << p.upc << endl;
-        if (productTable.retrieve(p))
+
+        if (p.upc == "X")
         {
+            cout << "Enter product upc to delete " << endl;
+            cin >> p.upc;
+            if (productTable.deleteItem(p))
+                cout << p.upc << " has been deleted" << endl;
+        }
+        else if (productTable.retrieve(p))
+        {
+            cout << "Will Search For " << p.upc << endl;
             cout << "retrieved from hashtable" << p << endl;
         }
         else if (p.upc != "0")

@@ -36,6 +36,7 @@ public:
 					                     // false if invalid index was returned 
 										 // from the hash function
 	bool retrieve( DT &);  // see description above class template
+	bool deleteItem( DT & );
 	void makeEmpty( );  //The function to remove all entries
 	int getCollisions();
 private:
@@ -120,6 +121,17 @@ bool HashTable<DT>::retrieve( DT & retrieved )
 	if ( !table[ location ].retrieve( retrieved ) )
 		return false;
 	return true;
+}
+
+template <class DT>
+bool HashTable<DT>:: deleteItem( DT & deleted )
+{
+	int location = hashfunc( deleted );
+	cout << "The calculated location in the deleteItem function is "
+		 << location << endl;
+	if ( location < 0 || location >= size )
+		return false;
+	return table[ location ].remove(deleted );
 }
 
 //The function to remove all entries in the hash table
