@@ -15,7 +15,6 @@ public:
 	List( const List<DT> & );
 	~List( );
 	List<DT> & operator =( const List<DT> & );
-//    friend ostream & operator <<(ostream& os, const DT & element);
 	void insert( const DT &); // no current position after use
 	bool first( DT & );	  // returns first element of list in listEl
 										  // and current position is set to this element;

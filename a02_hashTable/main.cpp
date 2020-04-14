@@ -46,17 +46,16 @@ int main() {
         {
             cout << "retrieved from hashtable" << p << endl;
         }
-        else {
-            cout << "Could not find " << p.upc;
+        else if (p.upc != "0")
+        {
+            cout << "Could not find " << p.upc << endl;
         }
-
-
 
         cout << "------------------------------------------------------------------------------------------------------"
              <<  endl;
     } while (p.upc != "0");
 
-    cout << "The number of collisions is " << intList.collisionCounter();
+    cout << "The number of collisions is " << productTable.getCollisions();
 
     return 0;
 }

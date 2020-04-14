@@ -37,6 +37,7 @@ public:
 										 // from the hash function
 	bool retrieve( DT &);  // see description above class template
 	void makeEmpty( );  //The function to remove all entries
+	int getCollisions();
 private:
 	List<DT>* table;  //The underlying array of linked lists
 	int (*hashfunc)(const DT &); // pointer to the hash function from client
@@ -129,4 +130,9 @@ void HashTable<DT>::makeEmpty( )
 		table[ i ].makeEmpty( );
 }
 
+template <class DT>
+int HashTable<DT>::getCollisions() {
 
+       return  table[0].getCollisionCounter();
+
+}
