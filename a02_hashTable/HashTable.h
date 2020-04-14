@@ -141,10 +141,3 @@ void HashTable<DT>::makeEmpty( )
 	for ( int i = 0; i < size; i++ )
 		table[ i ].makeEmpty( );
 }
-
-template <class DT>
-int HashTable<DT>::getCollisions() {
-
-       return  table[0].getCollisionCounter();
-
-}

@@ -62,7 +62,7 @@ int main() {
              <<  endl;
     } while (p.upc != "0");
 
-    cout << "The number of collisions is " << productTable.getCollisions();
+    cout << "The number of collisions is " << List<Product> :: getCollisionCounter();
 
     return 0;
 }
