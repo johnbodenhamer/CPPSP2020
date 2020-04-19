@@ -29,7 +29,7 @@ PriorityQueue<DT> :: PriorityQueue(int capacity)
 }
 
 template <class DT>
-PriorityQueue<DT> : :PriorityQueue(const DT arr[], int h)
+PriorityQueue<DT> :: PriorityQueue(const DT arr[], int h)
 {
     heapsize = h;
     elements = new DT[heapsize];
@@ -38,7 +38,7 @@ PriorityQueue<DT> : :PriorityQueue(const DT arr[], int h)
         elements[k]=arr[k];
     }
 
-    for(int i = ((heapsize - 1)-1/2; i>-0; i--))
+    for ( int i = ( heapsize - 2 ) /2; i >= 0; i-- )
     {
         heapify(i);
     }
@@ -100,7 +100,7 @@ inline void PriorityQueue<DT> :: heapify(int i)
 
         if(rightChild == heapsize)
         {
-            largest = leftChild
+            largest = leftChild;
         }
         else if (elements[leftChild] > elements[rightChild])
         {
