@@ -12,7 +12,8 @@ int main() {
     string jobsFile = "Jobs.csv";
     string printActivity = "PrintActivity.csv";
     Job j;
-    PriorityQueue<Job> pq(15);
+    char action;
+    PriorityQueue<Job> pq1(15);
 
     Job jobArr[SIZE];
     int i = 0;
@@ -29,26 +30,70 @@ int main() {
     while(getline(fileIn, cStr, ','))
     {
         j.numLines = stoi(cStr);
-        getline(fileIn, cStr, '\r');
-        j.jobName = cStr;
+        getline(fileIn, cStr, '\n');
+        j.jobName = cStr.substr(0, cStr.length() -1);
         j.level = getPriorityLevel(j.numLines);
         j.key = (100000 * j.level) - j.numLines;
         jobArr[i] = j;
         cout << i << "\t\t" << jobArr[i] << endl;
+        pq1.enqueue(jobArr[i]);
         i++;
     }
 
     fileIn.close();
-    PriorityQueue<Job> priorityQueue(jobArr, SIZE);
+    PriorityQueue<Job> pq2(jobArr, i);
 
     cout << "------------------------------------------------------------\n"
          << "The Jobs Priority Queue:\n"
          << "------------------------------------------------------------\n"
          << "Level\tName\tLines\tKey" << endl;
 
-    while(priorityQueue.dequeue(j))
+    while(pq1.dequeue(j))
     {
-        cout << j;
+        cout << j << endl;
+    }
+
+    fileIn.open(printActivity);
+
+
+    cout << "------------------------------------------------------------\n"
+         << "Records processed from the print activity file:\n"
+         << "------------------------------------------------------------\n"
+         << "Action\tLevel\tName\tLines\tKey" << endl;
+
+    while(getline(fileIn, cStr, ','))
+    {
+        action = cStr[0];
+        getline(fileIn, cStr, ',');
+        j.numLines = stoi(cStr);
+        getline(fileIn, cStr, '\n');
+        j.jobName = cStr.substr(0, cStr.length() -1);
+
+        if(action == 'E')
+        {
+            j.level = getPriorityLevel(j.numLines);
+            j.key = (100000 * j.level) - j.numLines;
+            pq2.enqueue(j);
+            cout << "Enqueue\t";
+        } else
+        {
+            pq2.dequeue(j);
+            cout << "Dequeue\t";
+        }
+        cout << j << endl;
+    }
+
+
+    fileIn.close();
+
+    cout << "------------------------------------------------------------\n"
+         << "The Jobs Priority Queue:\n"
+         << "------------------------------------------------------------\n"
+         << "Level\tName\tLines\tKey" << endl;
+
+    while(pq2.dequeue(j))
+    {
+        cout << j << endl;
     }
     return 0;
 }
@@ -61,7 +106,7 @@ int getPriorityLevel(int lines)
     {
         priorityLevel = 15;
     }
-    else if (lines >= 10001 && lines <= 500000)
+    else if (lines >= 10001 && lines <= 50000)
     {
         priorityLevel = 10;
     } else

@@ -48,7 +48,7 @@ template <class DT>
 void PriorityQueue<DT> :: enqueue(const DT & newElement)
 {
     int i = heapsize;
-    for (;(i != 0) && elements[(i-1)/2] <= newElement; i = (1 -1) /2)
+    for (;(i != 0) && elements[(i-1)/2] <= newElement; i = (i - 1) /2)
     {
         elements[i] = elements[(i -1)/2];
     }
