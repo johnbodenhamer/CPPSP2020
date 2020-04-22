@@ -10,6 +10,7 @@ class PriorityQueue
 {
 public:
     PriorityQueue(int);
+    PriorityQueue(const PriorityQueue &pq);
     PriorityQueue(const DT [], int);
     void enqueue(const DT & newElement);
     bool dequeue(DT & remElement);
@@ -19,6 +20,7 @@ private:
     DT* elements;
     int heapsize;
     inline void heapify(int);
+    inline void deepCopy(const PriorityQueue<DT> & pq);
 };
 
 template <class DT>
@@ -42,6 +44,12 @@ PriorityQueue<DT> :: PriorityQueue(const DT arr[], int h)
     {
         heapify(i);
     }
+}
+
+template <class DT>
+PriorityQueue<DT> ::PriorityQueue(const PriorityQueue &pq)
+{
+    deepCopy(pq);
 }
 
 template <class DT>
@@ -125,5 +133,17 @@ inline void PriorityQueue<DT> :: heapify(int i)
         elements[i] = temp;
     }
 }
+
+template <class DT>
+inline void PriorityQueue<DT> :: deepCopy(const PriorityQueue<DT> & pq)
+{
+    heapsize = pq.heapsize;
+    elements = new DT[heapsize];
+    for(int k=0; k<heapsize; k++)
+    {
+        elements[k] = pq.elements[k];
+    }
+}
+
 
 #endif //A03_PRIORITYQUEUE_PRIORITYQUEUE_H

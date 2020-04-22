@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/cygdrive/c/Users/John/CLionProjects/CPPSP2020/a03_priorityQueue/Job.h
+iostream
+-
+string
+-
+
+/cygdrive/c/Users/John/CLionProjects/CPPSP2020/a03_priorityQueue/PriorityQueue.h
+
+/cygdrive/c/Users/John/CLionProjects/CPPSP2020/a03_priorityQueue/main.cpp
+iostream
+-
+fstream
+-
+string
+-
+PriorityQueue.h
+/cygdrive/c/Users/John/CLionProjects/CPPSP2020/a03_priorityQueue/PriorityQueue.h
+Job.h
+/cygdrive/c/Users/John/CLionProjects/CPPSP2020/a03_priorityQueue/Job.h
+

@@ -14,11 +14,9 @@ int main() {
     Job j;
     char action;
     PriorityQueue<Job> pq1(15);
-
     Job jobArr[SIZE];
     int i = 0;
     ifstream fileIn;
-
     string cStr;
 
     fileIn.open(jobsFile);
@@ -42,6 +40,7 @@ int main() {
 
     fileIn.close();
     PriorityQueue<Job> pq2(jobArr, i);
+    PriorityQueue<Job> pq3(pq2);
 
     cout << "------------------------------------------------------------\n"
          << "The Jobs Priority Queue:\n"
@@ -95,6 +94,18 @@ int main() {
     {
         cout << j << endl;
     }
+
+    cout << "------------------------------------------------------------\n"
+         << "The copy constructor PQ:\n"
+         << "------------------------------------------------------------\n"
+         << "Level\tName\tLines\tKey" << endl;
+
+    while(pq3.dequeue(j))
+    {
+        cout << j << endl;
+    }
+
+
     return 0;
 }
 
