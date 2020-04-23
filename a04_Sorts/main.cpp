@@ -1,9 +1,75 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
 
+struct Movie
+{
+  int rank;
+  string title;
+  float grossSales;
+  int yearReleased;
+};
+
+const int ARRSIZE = 1000;
+void copyArray(const Movie arr1[], Movie arr2[]);
+void printArray(const Movie arr[]);
+
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+  string moviesFile = "TopGrossingMovies.csv";
+  Movie m;
+  Movie unsortedArr[ARRSIZE];
+  Movie sortedArr[ARRSIZE];
+  int i = 0;
+  ifstream fileIn;
+
+  string cStr;
+
+  fileIn.open(moviesFile);
+
+  while(getline(fileIn, cStr, ','))
+  {
+    m.rank = stoi(cStr);
+    getline(fileIn, cStr, ',');
+    m.title = cStr;
+    getline(fileIn, cStr, ',');
+    m.grossSales = stof(cStr);
+    getline(fileIn, cStr, '\n');
+    m.yearReleased = stoi(cStr);
+    unsortedArr[i] = m;
+    i++;
+  }
+
+  fileIn.close();
+  cout << "Records read: " << i << endl;
+
+  copyArray(unsortedArr, sortedArr);
+  printArray(sortedArr);
+
+  return 0;
+}
+
+void copyArray(const Movie arr1[], Movie arr2[])
+{
+  for (int i=0; i<ARRSIZE; i++)
+  {
+      arr2[i] = arr1[i];
+  }
+}
+
+void printArray(const Movie arr[])
+{
+  // print first 5 records
+  for (int i=0; i<5; i++)
+  {
+      cout << arr[i].title << endl;
+  }
+
+  // print last 5 records
+  for (int i=(ARRSIZE-5); i<ARRSIZE; i++)
+  {
+      cout << arr[i].title << endl;
+  }
 }
 
 void swap(int *xp, int *yp)
@@ -11,14 +77,6 @@ void swap(int *xp, int *yp)
     int temp = *xp;
     *xp = *yp;
     *yp = temp;
-}
-
-void printArray(int arr[], int n)
-{
-    for (int i=0; i<n; i++)
-    {
-        cout << arr[i];
-    }
 }
 
 int getMax(int arr[], int n)
@@ -283,4 +341,4 @@ void mergeSort(int arr[], int l, int r)
 
         merge(arr, l, m, r);
     }
-} 
+}
