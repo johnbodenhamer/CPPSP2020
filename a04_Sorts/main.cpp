@@ -14,18 +14,27 @@ struct Movie
 const int ARRSIZE = 1000;
 void copyArray(const Movie arr1[], Movie arr2[]);
 void printArray(const Movie arr[]);
+void readCSV(const string fileName, Movie arr[]);
 
 int main() {
-  string moviesFile = "TopGrossingMovies.csv";
-  Movie m;
   Movie unsortedArr[ARRSIZE];
   Movie sortedArr[ARRSIZE];
-  int i = 0;
+
+  readCSV("TopGrossingMovies.csv", unsortedArr);
+  copyArray(unsortedArr, sortedArr);
+  printArray(sortedArr);
+
+  return 0;
+}
+
+void readCSV(const string fileName, Movie arr[])
+{
+  Movie m;
   ifstream fileIn;
-
   string cStr;
+  int i = 0;
 
-  fileIn.open(moviesFile);
+  fileIn.open(fileName);
 
   while(getline(fileIn, cStr, ','))
   {
@@ -36,17 +45,12 @@ int main() {
     m.grossSales = stof(cStr);
     getline(fileIn, cStr, '\n');
     m.yearReleased = stoi(cStr);
-    unsortedArr[i] = m;
+    arr[i] = m;
     i++;
   }
 
   fileIn.close();
   cout << "Records read: " << i << endl;
-
-  copyArray(unsortedArr, sortedArr);
-  printArray(sortedArr);
-
-  return 0;
 }
 
 void copyArray(const Movie arr1[], Movie arr2[])
