@@ -35,6 +35,12 @@ void radixSort(Movie arr[], int n);
 Movie getMax(Movie arr[], int n);
 
 void countSort(Movie arr[], int n, int exp);
+void selectionSort(Movie arr[], int n);
+void insertionSort(Movie arr[], int n);
+void bubbleSort(Movie arr[], int n);
+void heapSort(Movie arr[], int n);
+void quickSort(Movie arr[], int low, int high);
+void mergeSort(Movie arr[], int l, int r);
 
 int main() {
     Movie unsortedArr[ARRSIZE];
@@ -43,20 +49,76 @@ int main() {
 
     readCSV("TopGrossingMovies.csv", unsortedArr);
     copyArray(unsortedArr, sortedArr);
+    cout << "Beginning Shell Sort" << endl;
     printArray(sortedArr);
     LoopCount = 0;
     shellSort(sortedArr, ARRSIZE);
-    cout << "Loop Count For Shell Sort:" << LoopCount << endl;
     printArray(sortedArr);
-
-    cout << "RADIX SORT" << endl;
+    cout << "Loop Count For Shell Sort:" << LoopCount << endl;
+    cout << endl;
 
     copyArray(unsortedArr, sortedArr);
+    cout << "Beginning Radix Sort" << endl;
     printArray(sortedArr);
     LoopCount = 0;
     radixSort(sortedArr, ARRSIZE);
-    cout << "Loop Count For Radix Sort:" << LoopCount << endl;
     printArray(sortedArr);
+    cout << "Loop Count For Radix Sort:" << LoopCount << endl;
+    cout << endl;
+
+    copyArray(unsortedArr, sortedArr);
+    cout << "Beginning Selection Sort" << endl;
+    printArray(sortedArr);
+    LoopCount = 0;
+    selectionSort(sortedArr, ARRSIZE);
+    printArray(sortedArr);
+    cout << "Loop Count For Selection Sort:" << LoopCount << endl;
+    cout << endl;
+
+    copyArray(unsortedArr, sortedArr);
+    cout << "Beginning Insertion Sort" << endl;
+    printArray(sortedArr);
+    LoopCount = 0;
+    insertionSort(sortedArr, ARRSIZE);
+    printArray(sortedArr);
+    cout << "Loop Count For Insertion Sort:" << LoopCount << endl;
+    cout << endl;
+
+    copyArray(unsortedArr, sortedArr);
+    cout << "Beginning Bubble Sort" << endl;
+    printArray(sortedArr);
+    LoopCount = 0;
+    bubbleSort(sortedArr, ARRSIZE);
+    printArray(sortedArr);
+    cout << "Loop Count For Bubble Sort:" << LoopCount << endl;
+    cout << endl;
+
+    copyArray(unsortedArr, sortedArr);
+    cout << "Beginning Heap Sort" << endl;
+    printArray(sortedArr);
+    LoopCount = 0;
+    heapSort(sortedArr, ARRSIZE);
+    printArray(sortedArr);
+    cout << "Loop Count For Heap Sort:" << LoopCount << endl;
+    cout << endl;
+
+    copyArray(unsortedArr, sortedArr);
+    cout << "Beginning Quick Sort" << endl;
+    printArray(sortedArr);
+    LoopCount = 0;
+    quickSort(sortedArr, 0, ARRSIZE);
+    printArray(sortedArr);
+    cout << "Loop Count For Quick Sort:" << LoopCount << endl;
+    cout << endl;
+
+    copyArray(unsortedArr, sortedArr);
+    cout << "Beginning Merge Sort" << endl;
+    printArray(sortedArr);
+    LoopCount = 0;
+    mergeSort(sortedArr, 0, ARRSIZE);
+    printArray(sortedArr);
+    cout << "Loop Count For Merge Sort:" << LoopCount << endl;
+    cout << endl;
 
     return 0;
 }
@@ -171,96 +233,106 @@ void countSort(Movie arr[], int n, int exp) {
 
     for (i = 0; i < n; i++) {
         arr[i] = output[i];
+        LoopCount++;
     }
 }
 
-void heapify(int arr[], int n, int i) {
+void heapify(Movie arr[], int n, int i) {
     int largest = i; // Initialize largest as root
     int l = 2 * i + 1; // left = 2*i + 1
     int r = 2 * i + 2; // right = 2*i + 2
 
     // If left child is larger than root
-    if (l < n && arr[l] > arr[largest])
+    if (l < n && arr[l].rank > arr[largest].rank)
         largest = l;
 
     // If right child is larger than largest so far
-    if (r < n && arr[r] > arr[largest])
+    if (r < n && arr[r].rank > arr[largest].rank)
         largest = r;
 
     // If largest is not root
     if (largest != i) {
         swap(arr[i], arr[largest]);
+        LoopCount++;
 
         // Recursively heapify the affected sub-tree
         heapify(arr, n, largest);
     }
 }
 
-void selectionSort(int arr[], int n) {
+void selectionSort(Movie arr[], int n) {
     int i, j, min_idx;
 
     for (i = 0; i < n - 1; i++) {
         min_idx = i;
         for (j = i + 1; j < n; j++) {
-            if (arr[j] < arr[min_idx])
+            if (arr[j].rank < arr[min_idx].rank)
                 min_idx = j;
+            LoopCount++;
         }
 
         swap(&arr[min_idx], &arr[i]);
     }
 }
 
-void insertionSort(int arr[], int n) {
-    int i, key, j;
+void insertionSort(Movie arr[], int n) {
+    Movie key;
+    int i, j;
     for (i = 1; i < n; i++) {
         key = arr[i];
         j = i - 1;
 
-        while (j >= 0 && arr[j] > key) {
+        while (j >= 0 && arr[j].rank > key.rank) {
             arr[j + 1] = arr[j];
             j = j - 1;
+            LoopCount++;
         }
         arr[j + 1] = key;
     }
 }
 
-void bubbleSort(int arr[], int n) {
+void bubbleSort(Movie arr[], int n) {
     int i, j;
     for (i = 0; i < n - 1; i++)
 
         for (j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
+            if (arr[j].rank > arr[j + 1].rank) {
                 swap(&arr[j], &arr[j + 1]);
             }
+            LoopCount++;
         }
 }
 
 // main function to do heap sort
-void heapSort(int arr[], int n) {
+void heapSort(Movie arr[], int n) {
     // Build heap (rearrange array)
-    for (int i = n / 2 - 1; i >= 0; i--)
+    for (int i = n / 2 - 1; i >= 0; i--) {
         heapify(arr, n, i);
+        LoopCount++;
+    }
 
     // One by one extract an element from heap
     for (int i = n - 1; i > 0; i--) {
         // Move current root to end
         swap(arr[0], arr[i]);
+        LoopCount++;
 
         // call max heapify on the reduced heap
         heapify(arr, i, 0);
     }
 }
 
-int partition(int arr[], int low, int high) {
-    int pivot = arr[high]; // pivot
+int partition(Movie arr[], int low, int high) {
+    Movie pivot = arr[high]; // pivot
     int i = (low - 1); // Index of smaller element
 
     for (int j = low; j <= high - 1; j++) {
         // If current element is smaller than the pivot
-        if (arr[j] < pivot) {
+        if (arr[j].rank < pivot.rank) {
             i++; // increment index of smaller element
             swap(&arr[i], &arr[j]);
         }
+        LoopCount++;
     }
     swap(&arr[i + 1], &arr[high]);
     return (i + 1);
@@ -270,7 +342,7 @@ int partition(int arr[], int low, int high) {
 arr[] --> Array to be sorted,
 low --> Starting index,
 high --> Ending index */
-void quickSort(int arr[], int low, int high) {
+void quickSort(Movie arr[], int low, int high) {
     if (low < high) {
         /* pi is partitioning index, arr[p] is now
         at right place */
@@ -280,29 +352,34 @@ void quickSort(int arr[], int low, int high) {
         // partition and after partition
         quickSort(arr, low, pi - 1);
         quickSort(arr, pi + 1, high);
+        LoopCount++;
     }
 }
 
-void merge(int arr[], int l, int m, int r) {
+void merge(Movie arr[], int l, int m, int r) {
     int i, j, k;
     int n1 = m - l + 1;
     int n2 = r - m;
 
     /* create temp arrays */
-    int L[n1], R[n2];
+    Movie L[n1], R[n2];
 
     /* Copy data to temp arrays L[] and R[] */
-    for (i = 0; i < n1; i++)
+    for (i = 0; i < n1; i++) {
         L[i] = arr[l + i];
-    for (j = 0; j < n2; j++)
+//        LoopCount++;
+    }
+    for (j = 0; j < n2; j++) {
         R[j] = arr[m + 1 + j];
+//        LoopCount++;
+    }
 
     /* Merge the temp arrays back into arr[l..r]*/
     i = 0; // Initial index of first subarray
     j = 0; // Initial index of second subarray
     k = l; // Initial index of merged subarray
     while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
+        if (L[i].rank <= R[j].rank) {
             arr[k] = L[i];
             i++;
         } else {
@@ -310,6 +387,7 @@ void merge(int arr[], int l, int m, int r) {
             j++;
         }
         k++;
+        LoopCount++;
     }
 
     /* Copy the remaining elements of L[], if there
@@ -318,6 +396,7 @@ void merge(int arr[], int l, int m, int r) {
         arr[k] = L[i];
         i++;
         k++;
+        LoopCount++;
     }
 
     /* Copy the remaining elements of R[], if there
@@ -326,12 +405,13 @@ void merge(int arr[], int l, int m, int r) {
         arr[k] = R[j];
         j++;
         k++;
+        LoopCount++;
     }
 }
 
 /* l is for left index and r is right index of the
    sub-array of arr to be sorted */
-void mergeSort(int arr[], int l, int r) {
+void mergeSort(Movie arr[], int l, int r) {
     if (l < r) {
         // Same as (l+r)/2, but avoids overflow for
         // large l and h
