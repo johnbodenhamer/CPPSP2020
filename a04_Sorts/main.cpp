@@ -9,19 +9,36 @@ struct Movie
   string title;
   float grossSales;
   int yearReleased;
+
+  //bool operator  > (const Movie & data) const;
 };
 
+//bool Movie :: operator  > (const Movie & data) const
+//{
+//  return (this -> rank > data.rank);
+//}
+
 const int ARRSIZE = 1000;
+int LoopCount = 0;
+
+// function prototypes
 void copyArray(const Movie arr1[], Movie arr2[]);
 void printArray(const Movie arr[]);
 void readCSV(const string fileName, Movie arr[]);
+void shellSort(Movie arr[], int n);
+void radixSort(Movie arr[], int n);
 
 int main() {
   Movie unsortedArr[ARRSIZE];
   Movie sortedArr[ARRSIZE];
+  int loopCount = 0;
 
   readCSV("TopGrossingMovies.csv", unsortedArr);
   copyArray(unsortedArr, sortedArr);
+  printArray(sortedArr);
+  LoopCount = 0;
+  shellSort(sortedArr, ARRSIZE);
+  cout << "Loop Count:" << LoopCount << endl;
   printArray(sortedArr);
 
   return 0;
@@ -57,7 +74,7 @@ void copyArray(const Movie arr1[], Movie arr2[])
 {
   for (int i=0; i<ARRSIZE; i++)
   {
-      arr2[i] = arr1[i];
+    arr2[i] = arr1[i];
   }
 }
 
@@ -66,35 +83,73 @@ void printArray(const Movie arr[])
   // print first 5 records
   for (int i=0; i<5; i++)
   {
-      cout << arr[i].title << endl;
+    cout << i << " " << arr[i].rank << " " << arr[i].title << " ";
+    cout << arr[i].grossSales << " " << arr[i].yearReleased << endl;
   }
 
   // print last 5 records
   for (int i=(ARRSIZE-5); i<ARRSIZE; i++)
   {
-      cout << arr[i].title << endl;
+    cout << i << " " << arr[i].rank << " " << arr[i].title << " ";
+    cout << arr[i].grossSales << " " << arr[i].yearReleased << endl;
   }
+}
+
+void shellSort(Movie arr[], int n)
+{
+  Movie temp;
+  for ( int gap = n/2; gap > 0; gap /= 2)
+  {
+    for (int i = gap; i < n; i += 1)
+    {
+      temp = arr[i];
+      int j;
+      for(j = i; j>= gap && arr[j - gap].rank > temp.rank; j -= gap)
+      {
+        arr[j] = arr[j - gap];
+      }
+      arr[j] = temp;
+      LoopCount++;
+    }
+  }
+}
+
+void radixSort(Movie arr[], int n)
+{
+  int m = getMax(arr, n);
+
+  for (int exp = 1; m/exp > 0; exp *= 10)
+  {
+    countSort(arr, n, exp);
+  }
+}
+
+void swap(Movie *xp, Movie *yp)
+{
+  Movie temp = *xp;
+  *xp = *yp;
+  *yp = temp;
 }
 
 void swap(int *xp, int *yp)
 {
-    int temp = *xp;
-    *xp = *yp;
-    *yp = temp;
+  int temp = *xp;
+  *xp = *yp;
+  *yp = temp;
 }
 
-int getMax(int arr[], int n)
+Movie getMax(Movie arr[], int n)
 {
-    int max = arr[0];
-    for (int i = 1; i < n; i++)
+  Movie max = arr[0];
+  for (int i = 1; i < n; i++)
+  {
+    if (arr[i].rank > max.rank)
     {
-        if (arr[i] > max)
-        {
-            max = arr[i];
-        }
+      max = arr[i];
     }
+  }
 
-    return max;
+  return max;
 }
 
 void countSort(int arr[], int n, int exp)
@@ -104,23 +159,23 @@ void countSort(int arr[], int n, int exp)
 
     for (i =0; i < n; i++)
     {
-        count[(arr[i]/exp)%10]++;
+      count[(arr[i]/exp)%10]++;
     }
 
     for (i = 1; i < 10; i++)
     {
-        count[i] += count[i + 1];
+      count[i] += count[i + 1];
     }
 
     for (i = n - 1; i >= 0; i--)
     {
-        output[count[(arr[i]/exp)%10] - 1] = arr[i];
-        count[(arr[i]/exp)%10]--;
+      output[count[(arr[i]/exp)%10] - 1] = arr[i];
+      count[(arr[i]/exp)%10]--;
     }
 
     for (i = 0; i < n; i++)
     {
-        arr[i] = output[i];
+      arr[i] = output[i];
     }
 }
 
@@ -145,33 +200,6 @@ void heapify(int arr[], int n, int i)
 
         // Recursively heapify the affected sub-tree
         heapify(arr, n, largest);
-    }
-}
-
-int shellSort(int arr[], int n)
-{
-    for ( int gap = n/2; gap > 0; gap /= 2)
-    {
-        for (int i = gap; i < n; i += 1)
-        {
-            int temp = arr[i];
-            int j;
-            for(j = i; j>= gap && arr[j - gap] > temp; j -= gap)
-            {
-                arr[j] = arr[j - gap];
-            }
-            arr[j] = temp;
-        }
-    }
-}
-
-void radixSort(int arr[], int n)
-{
-    int m = getMax(arr, n);
-
-    for (int exp = 1; m/exp > 0; exp *= 10)
-    {
-        countSort(arr, n, exp);
     }
 }
 
