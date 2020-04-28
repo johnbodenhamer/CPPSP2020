@@ -2,6 +2,10 @@
 
 using namespace std;
 
+
+#include "Tree.h"
+#include "Category.h"
+
 void process();
 
 int main() {

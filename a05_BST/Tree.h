@@ -23,7 +23,7 @@ void addBST(treeNode<DT>* root, treeNode<DT>* newNode)
 {
   if(root==nullptr) {
     root=newNode;
-  } elseif(newNode -> key < root -> key) {
+  } else if(newNode -> info < root -> info) {
     addBST(root -> left, newNode);
   } else {
     addBst(root -> right, newNode);
