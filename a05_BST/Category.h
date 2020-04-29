@@ -11,6 +11,7 @@ struct Category {
     friend ostream & operator << (ostream & out, const Category & data);
     bool operator  == (const Category & data) const;
     bool operator > (const Category & data) const;
+    bool operator < (const Category & data) const;
 };
 
 ostream & operator << (ostream & out, const Category & data)
@@ -26,8 +27,12 @@ bool Category :: operator  == (const Category & data) const
 
 bool Category :: operator  > (const Category & data) const
 {
-    return (this -> key == data.key);
+    return (this -> key > data.key);
 }
 
+bool Category :: operator  < (const Category & data) const
+{
+    return (this -> key < data.key);
+}
 
 #endif //A05_BST_CATEGORY_H

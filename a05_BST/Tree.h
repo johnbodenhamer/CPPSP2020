@@ -26,7 +26,7 @@ void addBST(treeNode<DT>* root, treeNode<DT>* newNode)
   } else if(newNode -> info < root -> info) {
     addBST(root -> left, newNode);
   } else {
-    addBst(root -> right, newNode);
+    addBST(root -> right, newNode);
   }
 }
 

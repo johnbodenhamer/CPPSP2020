@@ -9,8 +9,20 @@ using namespace std;
 void process();
 
 int main() {
-    process();
-    return 0;
+  treeNode<Category>* root = NULL;
+
+  treeNode<Category>* newNode = new treeNode<Category>;
+  newNode->info.key = 'L';
+  newNode->info.description = "Lighting";
+  addBST(root, newNode);
+  newNode = new treeNode<Category>;
+  newNode->info.key = 'E';
+  newNode->info.description = "Electrical";
+  addBST(root, newNode);
+  graphAux(8, root);
+
+  process();
+  return 0;
 }
 
 int getChoice()
