@@ -12,6 +12,7 @@ int process(treeNode<Category> *&root);
 void readCSV(const string fileName, treeNode<Category> *&root);
 
 void getNewCategory(treeNode<Category> *&root);
+
 int main()
 {
 
@@ -69,7 +70,6 @@ int process(treeNode<Category> *&root)
              << " 13.  Quit \n\n";
 
         cin >> choice;
-        treeNode<Category> *newNode = new treeNode<Category>;
 
         if (choice < 1 || choice > 13) {
             cout << "\aInvalid choice\n"
@@ -92,7 +92,7 @@ int process(treeNode<Category> *&root)
             case 10:
             case 11:
             case 12:
-                graphAux(8, root);
+                graphAux(15, root);
                 break;
             case 13:
                 isDone = true;
@@ -109,23 +109,30 @@ void getNewCategory(treeNode<Category> *&root)
     char newKey;
     string newDesc;
     bool isDone = false;
+    bool found;
 
-    while(!isDone) {
+    while (!isDone) {
 
         cout << "Enter a character, press 0 to quit" << endl;
         cin >> newKey;
-        if (newKey == '0')
-        {
+        if (newKey == '0') {
             isDone = true;
             break;
         }
 
+        searchTree(root, newKey, found);
+
+        if (found)
+        {
+            cout << "Already Exists, try again" << endl;
+            continue;
+        }
         cout << "Enter a description" << endl;
         cin >> newDesc;
 
-        treeNode<Category>* newNode = new treeNode<Category>;
-        newNode -> info.key = newKey;
-        newNode -> info.description = newDesc;
+        treeNode<Category> *newNode = new treeNode<Category>;
+        newNode->info.key = newKey;
+        newNode->info.description = newDesc;
 
         addBST(root, newNode);
     }

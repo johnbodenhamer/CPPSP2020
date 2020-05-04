@@ -7,104 +7,105 @@
 
 #include <iostream>
 #include <iomanip>
+
 using namespace std;
 
-template <class DT>
+template<class DT>
 struct treeNode
 {
-  treeNode<DT>* left;
-  DT info;
-  treeNode<DT>* right;
+    treeNode<DT> *left;
+    DT info;
+    treeNode<DT> *right;
 };
 
 //***   Add tree node
-template <class DT>
-void addBST(treeNode<DT>* & root, treeNode<DT>* newNode)
+template<class DT>
+void addBST(treeNode<DT> *&root, treeNode<DT> *newNode)
 {
-  if(root==nullptr) {
-    root=newNode;
-  } else if(newNode -> info < root -> info) {
-    addBST(root -> left, newNode);
-  } else {
-    addBST(root -> right, newNode);
-  }
-}
-
-//***   Display the tree graphically
-template <class DT>
-void  graphAux(int indent, treeNode<DT>* root)
-{
-  if (root != nullptr)
-    {
-      graphAux(indent + 8, root->right);
-      cout << setw(indent) << " " << root->info << endl;
-      graphAux(indent + 8, root->left);
+    if (root == nullptr) {
+        root = newNode;
+    } else if (newNode->info < root->info) {
+        addBST(root->left, newNode);
+    } else {
+        addBST(root->right, newNode);
     }
 }
 
-template <class DT>
-void preOrder(treeNode<DT>* & root)
+//***   Display the tree graphically
+template<class DT>
+void graphAux(int indent, treeNode<DT> *root)
 {
-   if(root != nullptr)
- {
-   cout << root -> key;
-   preOrder(root -> left);
-   preOrder(root -> right);
- }
+    if (root != nullptr) {
+        graphAux(indent + 8, root->right);
+        cout << setw(indent) << " " << root->info << endl;
+        graphAux(indent + 8, root->left);
+    }
+}
+
+template<class DT>
+void preOrder(treeNode<DT> *&root)
+{
+    if (root != nullptr) {
+        cout << root->key;
+        preOrder(root->left);
+        preOrder(root->right);
+    }
 }
 
 //***  Find the smallest value
-template <class DT>
-treeNode<DT>* smallestNode (treeNode<DT>* root)
+template<class DT>
+treeNode<DT> *smallestNode(treeNode<DT> *root)
 {
-	if (root->left == nullptr)
-	 return root;
-	else
-	 return smallestNode(root->left);
+    if (root->left == nullptr)
+        return root;
+    else
+        return smallestNode(root->left);
 }
 
 //***  Find the largest value
-template <class DT>
-treeNode<DT>* largestNode (treeNode<DT>* root)
+template<class DT>
+treeNode<DT> *largestNode(treeNode<DT> *root)
 {
-	if (root->right == nullptr)
-		return root;
-	else
-	 return largestNode(root->right);
+    if (root->right == nullptr)
+        return root;
+    else
+        return largestNode(root->right);
 }
 
 //*** Height of a tree (including max function)
+template<class DT>
 int max(int first, int second)
 {
-  if(first > second)
-    return first;
-  else
-    return second;
+    if (first > second)
+        return first;
+    else
+        return second;
 }
 
- int height(treeNode*root)
- {
-  if(root == nullptr)
-    return 0;
-  else
-    return 1 + max(height(root->left), height(root->right));
- }
+template<class DT>
+int height(treeNode<DT> *&root)
+{
+    if (root == nullptr)
+        return 0;
+    else
+        return 1 + max(height(root->left), height(root->right));
+}
 
-// //***   Search for a value in the tree
-// void searchTree(treeNode* root, char& item, bool& found)
-// {
-//     if (root == nullptr)
-// 		found = false;		// item is not found.
-//     else if (item < root ->key)	// Search left subtree.
-// 	  	searchTree (root ->left, item, found);
-// 	else if (item > root ->key)	// Search right subtree
-// 		searchTree (root ->right, item, found);
-//     else
-//     {
-// 	item = root ->key;			// item is found.
-// 	found = true;
-//     }
-// }
+//***   Search for a value in the tree
+template<class DT>
+void searchTree(treeNode<DT> *root, char &item, bool &found)
+{
+    if (root == nullptr)
+        found = false;        // item is not found.
+    else if (item < root->info.key)    // Search left subtree.
+        searchTree(root->left, item, found);
+    else if (item > root->info.key)    // Search right subtree
+        searchTree(root->right, item, found);
+    else {
+        item = root->info.key;            // item is found.
+        found = true;
+    }
+}
 //
 // // Deletes item from tree.
 // void deleteBST(treeNode*& root, char item)
