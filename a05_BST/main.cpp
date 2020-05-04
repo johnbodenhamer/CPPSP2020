@@ -15,6 +15,8 @@ void getNewCategory(treeNode<Category> *&root);
 
 void updateCategoryDescription(treeNode<Category> *&root);
 
+void getHeight(treeNode<Category> *root);
+
 int main()
 {
 
@@ -92,6 +94,8 @@ int process(treeNode<Category> *&root)
             case 6:
             case 7:
             case 8:
+                getHeight(root);
+                break;
             case 9:
             case 10:
             case 11:
@@ -166,5 +170,10 @@ void updateCategoryDescription(treeNode<Category> *&root)
         cout << "Node not found!" << endl;
     }
 
+}
+
+void getHeight(treeNode<Category> *root)
+{
+    cout << "The Tree's height is: " << height(root) << '\n' <<  endl;
 }
 
