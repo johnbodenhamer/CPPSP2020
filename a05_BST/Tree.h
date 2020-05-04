@@ -13,10 +13,17 @@ using namespace std;
 template<class DT>
 struct treeNode
 {
+    treeNode();
     treeNode<DT> *left;
     DT info;
     treeNode<DT> *right;
 };
+
+template<class DT>
+treeNode<DT>::treeNode(){
+    right = nullptr;
+    left = nullptr;
+}
 
 //***   Add tree node
 template<class DT>
