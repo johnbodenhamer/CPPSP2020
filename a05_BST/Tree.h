@@ -19,7 +19,7 @@ struct treeNode
 
 //***   Add tree node
 template <class DT>
-void addBST(treeNode<DT>* root, treeNode<DT>* newNode)
+void addBST(treeNode<DT>* & root, treeNode<DT>* newNode)
 {
   if(root==nullptr) {
     root=newNode;
@@ -42,34 +42,37 @@ void  graphAux(int indent, treeNode<DT>* root)
     }
 }
 
-// void preOrder(treeNode* root)
-// {
-//     if(root != nullptr)
-//     {
-//         cout << root -> key;
-//         preOrder(root -> left);
-//         preOrder(root -> right);
-//     }
-// }
-//
-// //***  Find the smallest value
-// treeNode* smallestNode (treeNode* root)
-// {
-// 	if (root->left == nullptr)
-// 		return root;
-// 	else
-// 		return smallestNode(root->left);
-// }
-//
-// //***  Find the largest value
-// treeNode* largestNode (treeNode* root)
-// {
-// 	if (root->right == nullptr)
-// 		return root;
-// 	else
-// 		return largestNode(root->right);
-// }
-//
+template <class DT>
+ void preOrder(treeNode<DT>* & root)
+ {
+     if(root != nullptr)
+     {
+         cout << root -> key;
+         preOrder(root -> left);
+         preOrder(root -> right);
+     }
+ }
+
+ //***  Find the smallest value
+ template <class DT>
+ treeNode<DT>* smallestNode (treeNode<DT>* root)
+ {
+ 	if (root->left == nullptr)
+ 		return root;
+ 	else
+ 		return smallestNode(root->left);
+ }
+
+ //***  Find the largest value
+ template <class DT>
+ treeNode<DT>* largestNode (treeNode<DT>* root)
+ {
+ 	if (root->right == nullptr)
+ 		return root;
+ 	else
+ 		return largestNode(root->right);
+ }
+
 // //***   Search for a value in the tree
 // void searchTree(treeNode* root, char& item, bool& found)
 // {

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -6,52 +7,79 @@ using namespace std;
 #include "Tree.h"
 #include "Category.h"
 
-void process();
+int process(treeNode<Category> *&root);
 
-int main() {
-  treeNode<Category>* root = NULL;
+void readCSV(const string fileName, treeNode<Category> *&root);
 
-  treeNode<Category>* newNode = new treeNode<Category>;
-  newNode->info.key = 'L';
-  newNode->info.description = "Lighting";
-  addBST(root, newNode);
-  newNode = new treeNode<Category>;
-  newNode->info.key = 'E';
-  newNode->info.description = "Electrical";
-  addBST(root, newNode);
-  graphAux(8, root);
+treeNode<Category>* getNewCategory(treeNode<Category> *&root);
+int main()
+{
 
-  process();
-  return 0;
+    treeNode<Category> *root = NULL;
+
+
+    readCSV("Categories.csv", root);
+
+    process(root);
+    return 0;
 }
 
-int getChoice()
+void readCSV(const string fileName, treeNode<Category> *&root)
+{
+
+    Category c;
+    ifstream fileIn;
+    string cStr;
+    int i = 0;
+
+    fileIn.open(fileName);
+
+    while (getline(fileIn, cStr, ',')) {
+        treeNode<Category> *newNode = new treeNode<Category>;
+        newNode->info.key = cStr[0];
+        getline(fileIn, cStr, '\n');
+        newNode->info.description = cStr.substr(0, cStr.length() - 1);
+        addBST(root, newNode);
+        i++;
+    }
+
+    fileIn.close();
+}
+
+
+int process(treeNode<Category> *&root)
 {
     int choice;
-    bool valid;
+    bool isDone = false;
 
-    cout << "======== Menu ========\n"
-         << " 1.   Add categories\n"
-         << " 2.   Update an existing category's description \n"
-         << " 3.   Delete a category \n"
-         << " 4.   Search for a category \n"
-         << " 5.   Determine number of nodes in the tree\n"
-         << " 6.   Determine the smallest category in the tree \n"
-         << " 7.   Determine the largest category in the tree\n"
-         << " 8.   Determine the height of the tree  \n"
-         << " 9.   Display the categories ascending   \n"
-         << " 10.  Display the categories preOrder \n"
-         << " 11.  Display the categories postOrder \n"
-         << " 12.  Display the tree graphically  \n"
-         << " 13.  Quit \n\n";
+    do {
+        cout << "======== Menu ========\n"
+             << " 1.   Add categories\n"
+             << " 2.   Update an existing category's description \n"
+             << " 3.   Delete a category \n"
+             << " 4.   Search for a category \n"
+             << " 5.   Determine number of nodes in the tree\n"
+             << " 6.   Determine the smallest category in the tree \n"
+             << " 7.   Determine the largest category in the tree\n"
+             << " 8.   Determine the height of the tree  \n"
+             << " 9.   Display the categories ascending   \n"
+             << " 10.  Display the categories preOrder \n"
+             << " 11.  Display the categories postOrder \n"
+             << " 12.  Display the tree graphically  \n"
+             << " 13.  Quit \n\n";
 
-    do
-    {
         cin >> choice;
+        treeNode<Category> *newNode = new treeNode<Category>;
 
-        switch(choice)
-        {
+        if (choice < 1 || choice > 13) {
+            cout << "\aInvalid choice\n"
+                 << "Please try again: ";
+            continue;
+        }
+
+        switch (choice) {
             case 1:
+                getNewCategory(root);
             case 2:
             case 3:
             case 4:
@@ -59,57 +87,35 @@ int getChoice()
             case 6:
             case 7:
             case 8:
+            case 9:
             case 10:
             case 11:
             case 12:
-            case 13: valid = true;
+                graphAux(8, root);
                 break;
-            default : valid = false;
-                cout << "\aInvalid choice\n"
-                     << "Please try again: ";
+            case 13:
+                isDone = true;
                 break;
-
         }
-    }
-    while (!valid);
+    } while (!isDone);
 
     return choice;
 }
 
-void process()
+void getNewCategory(treeNode<Category> *&root)
 {
+    treeNode<Category>* newNode = nullptr;
+    char sentinel = '0';
+    bool isDone = false;
 
-    do
-    {
+    while(!isDone) {
+        cout << "Enter a character" << endl;
+        cin >> newNode->info.key;
+        cout << "Enter a description" << endl;
+        cin >> newNode->info.description;
 
-        switch (getChoice())
-        {
-            case 1 : cout << '1' << endl;
-                break;
-            case 2 : cout << '2' << endl;
-                break;
-            case 3 : cout << "3 \n";
-                break;
-            case 4 : cout << "4 \n";
-                break;
-            case 5 : cout << "5 \n";
-                break;
-            case 6 : cout << "6 \n";
-                break;
-            case 7 : cout << "7 \n";
-                break;
-            case 8 : cout << "8 \n";
-                break;
-            case 9 : cout << '1' << endl;
-                break;
-            case 10 : cout << '2' << endl;
-                break;
-            case 11 : cout << "3 \n";
-                break;
-            case 12 : cout << "3 \n";
-                break;
-            case 13 : break;
-        }
+        addBST(root, newNode);
     }
-    while (getChoice() != 13);
+    return newNode;
 }
+

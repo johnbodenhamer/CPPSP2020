@@ -24,7 +24,7 @@ int LoopCount = 0;
 // function prototypes
 void copyArray(const Movie arr1[], Movie arr2[]);
 
-void printArray(const Movie arr[]);
+void printArray(const Movie arr[], ofstream & txtOut);
 
 void readCSV(const string fileName, Movie arr[]);
 
@@ -45,80 +45,87 @@ void mergeSort(Movie arr[], int l, int r);
 int main() {
     Movie unsortedArr[ARRSIZE];
     Movie sortedArr[ARRSIZE];
-    int loopCount = 0;
+    string cStr;
+    ofstream txtOut;
+    txtOut.open("Sorts.txt");
 
     readCSV("TopGrossingMovies.csv", unsortedArr);
     copyArray(unsortedArr, sortedArr);
-    cout << "Beginning Shell Sort" << endl;
-    printArray(sortedArr);
+    txtOut << "Beginning Shell Sort" << endl;
+    printArray(sortedArr, txtOut);
     LoopCount = 0;
     shellSort(sortedArr, ARRSIZE);
-    printArray(sortedArr);
-    cout << "Loop Count For Shell Sort:" << LoopCount << endl;
-    cout << endl;
+    printArray(sortedArr , txtOut);
+    txtOut << "Loop Count For Shell Sort:" << LoopCount << endl;
+    txtOut << endl;
 
     copyArray(unsortedArr, sortedArr);
-    cout << "Beginning Radix Sort" << endl;
-    printArray(sortedArr);
+    txtOut << "Beginning Radix Sort" << endl;
+    printArray(sortedArr, txtOut);
     LoopCount = 0;
     radixSort(sortedArr, ARRSIZE);
-    printArray(sortedArr);
-    cout << "Loop Count For Radix Sort:" << LoopCount << endl;
-    cout << endl;
+    printArray(sortedArr, txtOut);
+    txtOut << "Loop Count For Radix Sort:" << LoopCount << endl;
+    txtOut << endl;
 
     copyArray(unsortedArr, sortedArr);
-    cout << "Beginning Selection Sort" << endl;
-    printArray(sortedArr);
+    txtOut << "Beginning Selection Sort" << endl;
+    printArray(sortedArr, txtOut);
     LoopCount = 0;
     selectionSort(sortedArr, ARRSIZE);
-    printArray(sortedArr);
-    cout << "Loop Count For Selection Sort:" << LoopCount << endl;
-    cout << endl;
+    printArray(sortedArr, txtOut);
+    txtOut << "Loop Count For Selection Sort:" << LoopCount << endl;
+    txtOut << endl;
 
     copyArray(unsortedArr, sortedArr);
-    cout << "Beginning Insertion Sort" << endl;
-    printArray(sortedArr);
+    txtOut << "Beginning Insertion Sort" << endl;
+    printArray(sortedArr, txtOut);
     LoopCount = 0;
     insertionSort(sortedArr, ARRSIZE);
-    printArray(sortedArr);
-    cout << "Loop Count For Insertion Sort:" << LoopCount << endl;
-    cout << endl;
+    printArray(sortedArr, txtOut);
+    txtOut << "Loop Count For Insertion Sort:" << LoopCount << endl;
+    txtOut << endl;
 
     copyArray(unsortedArr, sortedArr);
-    cout << "Beginning Bubble Sort" << endl;
-    printArray(sortedArr);
+    txtOut << "Beginning Bubble Sort" << endl;
+    printArray(sortedArr, txtOut);
     LoopCount = 0;
     bubbleSort(sortedArr, ARRSIZE);
-    printArray(sortedArr);
-    cout << "Loop Count For Bubble Sort:" << LoopCount << endl;
-    cout << endl;
+    printArray(sortedArr, txtOut);
+    txtOut << "Loop Count For Bubble Sort:" << LoopCount << endl;
+    txtOut << endl;
 
     copyArray(unsortedArr, sortedArr);
-    cout << "Beginning Heap Sort" << endl;
-    printArray(sortedArr);
+    txtOut << "Beginning Heap Sort" << endl;
+    printArray(sortedArr, txtOut);
     LoopCount = 0;
     heapSort(sortedArr, ARRSIZE);
-    printArray(sortedArr);
-    cout << "Loop Count For Heap Sort:" << LoopCount << endl;
-    cout << endl;
+    printArray(sortedArr, txtOut);
+    txtOut << "Loop Count For Heap Sort:" << LoopCount << endl;
+    txtOut << endl;
 
     copyArray(unsortedArr, sortedArr);
-    cout << "Beginning Quick Sort" << endl;
-    printArray(sortedArr);
+    txtOut << "Beginning Quick Sort" << endl;
+    printArray(sortedArr, txtOut);
     LoopCount = 0;
-    quickSort(sortedArr, 0, ARRSIZE);
-    printArray(sortedArr);
-    cout << "Loop Count For Quick Sort:" << LoopCount << endl;
-    cout << endl;
+    quickSort(sortedArr, 0, ARRSIZE - 1);
+    printArray(sortedArr, txtOut);
+    txtOut << "Loop Count For Quick Sort:" << LoopCount << endl;
+    txtOut << endl;
 
     copyArray(unsortedArr, sortedArr);
-    cout << "Beginning Merge Sort" << endl;
-    printArray(sortedArr);
+    txtOut << "Beginning Merge Sort" << endl;
+    printArray(sortedArr, txtOut);
     LoopCount = 0;
-    mergeSort(sortedArr, 0, ARRSIZE);
-    printArray(sortedArr);
-    cout << "Loop Count For Merge Sort:" << LoopCount << endl;
-    cout << endl;
+    mergeSort(sortedArr, 0, ARRSIZE - 1);
+    printArray(sortedArr, txtOut);
+    txtOut << "Loop Count For Merge Sort:" << LoopCount << endl;
+    txtOut << endl;
+
+    txtOut.close();
+
+    cout << "Press any Key to continue" << endl;
+    cin >> cStr;
 
     return 0;
 }
@@ -144,7 +151,6 @@ void readCSV(const string fileName, Movie arr[]) {
     }
 
     fileIn.close();
-    cout << "Records read: " << i << endl;
 }
 
 void copyArray(const Movie arr1[], Movie arr2[]) {
@@ -153,17 +159,17 @@ void copyArray(const Movie arr1[], Movie arr2[]) {
     }
 }
 
-void printArray(const Movie arr[]) {
+void printArray(const Movie arr[], ofstream & txtOut) {
     // print first 5 records
     for (int i = 0; i < 5; i++) {
-        cout << i << " " << arr[i].rank << " " << arr[i].title << " ";
-        cout << arr[i].grossSales << " " << arr[i].yearReleased << endl;
+        txtOut << i << " " << arr[i].rank << " " << arr[i].title << " ";
+        txtOut << arr[i].grossSales << " " << arr[i].yearReleased << endl;
     }
 
     // print last 5 records
     for (int i = (ARRSIZE - 5); i < ARRSIZE; i++) {
-        cout << i << " " << arr[i].rank << " " << arr[i].title << " ";
-        cout << arr[i].grossSales << " " << arr[i].yearReleased << endl;
+        txtOut << i << " " << arr[i].rank << " " << arr[i].title << " ";
+        txtOut << arr[i].grossSales << " " << arr[i].yearReleased << endl;
     }
 }
 
@@ -219,10 +225,12 @@ void countSort(Movie arr[], int n, int exp) {
 
     for (i = 0; i < n; i++) {
         count[(arr[i].rank / exp) % 10]++;
+        LoopCount++;
     }
 
     for (i = 1; i < 10; i++) {
         count[i] += count[i - 1];
+        LoopCount++;
     }
 
     for (i = n - 1; i >= 0; i--) {
@@ -233,7 +241,6 @@ void countSort(Movie arr[], int n, int exp) {
 
     for (i = 0; i < n; i++) {
         arr[i] = output[i];
-        LoopCount++;
     }
 }
 
@@ -412,6 +419,7 @@ void merge(Movie arr[], int l, int m, int r) {
 /* l is for left index and r is right index of the
    sub-array of arr to be sorted */
 void mergeSort(Movie arr[], int l, int r) {
+    LoopCount++;
     if (l < r) {
         // Same as (l+r)/2, but avoids overflow for
         // large l and h
