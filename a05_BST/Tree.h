@@ -102,17 +102,18 @@ int height(treeNode<DT> *&root)
 
 //***   Search for a value in the tree
 template<class DT>
-void searchTree(treeNode<DT> *root, char &item, bool &found)
+void searchTree(treeNode<DT> *root, treeNode<DT> *&returnNode, char &item, bool &found)
 {
     if (root == nullptr)
         found = false;        // item is not found.
     else if (item < root->info.key)    // Search left subtree.
-        searchTree(root->left, item, found);
+        searchTree(root->left, returnNode, item, found);
     else if (item > root->info.key)    // Search right subtree
-        searchTree(root->right, item, found);
+        searchTree(root->right, returnNode, item, found);
     else {
         item = root->info.key;            // item is found.
         found = true;
+        returnNode = root;
     }
 }
 //

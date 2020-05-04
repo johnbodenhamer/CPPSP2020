@@ -13,6 +13,8 @@ void readCSV(const string fileName, treeNode<Category> *&root);
 
 void getNewCategory(treeNode<Category> *&root);
 
+void updateCategoryDescription(treeNode<Category> *&root);
+
 int main()
 {
 
@@ -82,6 +84,8 @@ int process(treeNode<Category> *&root)
                 getNewCategory(root);
                 break;
             case 2:
+                updateCategoryDescription(root);
+                break;
             case 3:
             case 4:
             case 5:
@@ -105,6 +109,7 @@ int process(treeNode<Category> *&root)
 
 void getNewCategory(treeNode<Category> *&root)
 {
+    treeNode<Category> * foundNode;
 
     char newKey;
     string newDesc;
@@ -120,7 +125,7 @@ void getNewCategory(treeNode<Category> *&root)
             break;
         }
 
-        searchTree(root, newKey, found);
+        searchTree(root, foundNode, newKey, found);
 
         if (found)
         {
@@ -138,8 +143,28 @@ void getNewCategory(treeNode<Category> *&root)
     }
 }
 
-void updateCategoryDescription()
+void updateCategoryDescription(treeNode<Category> *&root)
 {
+    bool found;
+    char searchKey;
+    string newDesc;
+    treeNode<Category> * foundNode;
+
+    cout << "Enter a Key to update" << endl;
+
+    cin >> searchKey;
+
+    searchTree(root, foundNode, searchKey, found);
+
+    if(found){
+        cout << "Current Description: " << foundNode->info.description << endl;
+        cout << "Enter a new Description: ";
+        cin >> newDesc;
+        foundNode->info.description = newDesc;
+    }
+    else {
+        cout << "Node not found!" << endl;
+    }
 
 }
 
