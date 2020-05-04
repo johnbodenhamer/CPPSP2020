@@ -43,34 +43,51 @@ void  graphAux(int indent, treeNode<DT>* root)
 }
 
 template <class DT>
- void preOrder(treeNode<DT>* & root)
+void preOrder(treeNode<DT>* & root)
+{
+   if(root != nullptr)
  {
-     if(root != nullptr)
-     {
-         cout << root -> key;
-         preOrder(root -> left);
-         preOrder(root -> right);
-     }
+   cout << root -> key;
+   preOrder(root -> left);
+   preOrder(root -> right);
  }
+}
 
- //***  Find the smallest value
- template <class DT>
- treeNode<DT>* smallestNode (treeNode<DT>* root)
- {
- 	if (root->left == nullptr)
- 		return root;
- 	else
- 		return smallestNode(root->left);
- }
+//***  Find the smallest value
+template <class DT>
+treeNode<DT>* smallestNode (treeNode<DT>* root)
+{
+	if (root->left == nullptr)
+	 return root;
+	else
+	 return smallestNode(root->left);
+}
 
- //***  Find the largest value
- template <class DT>
- treeNode<DT>* largestNode (treeNode<DT>* root)
+//***  Find the largest value
+template <class DT>
+treeNode<DT>* largestNode (treeNode<DT>* root)
+{
+	if (root->right == nullptr)
+		return root;
+	else
+	 return largestNode(root->right);
+}
+
+//*** Height of a tree (including max function)
+int max(int first, int second)
+{
+  if(first > second)
+    return first;
+  else
+    return second;
+}
+
+ int height(treeNode*root)
  {
- 	if (root->right == nullptr)
- 		return root;
- 	else
- 		return largestNode(root->right);
+  if(root == nullptr)
+    return 0;
+  else
+    return 1 + max(height(root->left), height(root->right));
  }
 
 // //***   Search for a value in the tree
@@ -123,20 +140,5 @@ template <class DT>
 // 	}
 // }
 //
-// //*** Height of a tree (including max function)
-// int max(int first, int second)
-// {
-//     if(first > second)
-//        return first;
-//     else
-//        return second;
-// }
-// int height(treeNode*root)
-// {
-//     if(root == nullptr)
-//        return 0;
-//     else
-//        return 1 + max(height(root->left), height(root->right));
-// }
 
 #endif //A05_BST_TREE_H
