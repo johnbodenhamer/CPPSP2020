@@ -116,40 +116,41 @@ void searchTree(treeNode<DT> *root, treeNode<DT> *&returnNode, char &item, bool 
         returnNode = root;
     }
 }
-//
-// // Deletes item from tree.
-// void deleteBST(treeNode*& root, char item)
-// {
-// treeNode* tempPtr;
-// if (item < root->key)
-// 		deleteBST(root->left, item);
-// else if (item > root->key)
-// 		deleteBST(root->right, item);
-// else
-// //****   item==root->key  ****
-// {
-// 		if (root->left == nullptr)
-// 		{
-// 			tempPtr=root;
-// 			root = root->right;
-// 			delete tempPtr;
-// 		}
-// 		else if (root->right == nullptr)
-// 		{
-// 			tempPtr=root;
-// 			root = root->left;
-// 			delete tempPtr;
-// 		}
-// 		else
-// 		{
-// 			tempPtr=root->left;
-// 			while(tempPtr->right != nullptr)
-// 				tempPtr=tempPtr->right;
-// 			root->key = tempPtr->key;
-// 			deleteBST(root->left,tempPtr->key);
-// 		}
-// 	}
-// }
-//
+
+ // Deletes item from tree.
+ template<class DT>
+ void deleteBST(treeNode<DT>*& root, char item)
+ {
+ treeNode<DT>* tempPtr;
+ if (item < root->info.key)
+ 		deleteBST(root->left, item);
+ else if (item > root->info.key)
+ 		deleteBST(root->right, item);
+ else
+ //****   item==root->key  ****
+ {
+ 		if (root->left == nullptr)
+ 		{
+ 			tempPtr=root;
+ 			root = root->right;
+ 			delete tempPtr;
+ 		}
+ 		else if (root->right == nullptr)
+ 		{
+ 			tempPtr=root;
+ 			root = root->left;
+ 			delete tempPtr;
+ 		}
+ 		else
+ 		{
+ 			tempPtr=root->left;
+ 			while(tempPtr->right != nullptr)
+ 				tempPtr=tempPtr->right;
+ 			root->info.key = tempPtr->info.key;
+ 			deleteBST(root->left,tempPtr->info.key);
+ 		}
+ 	}
+ }
+
 
 #endif //A05_BST_TREE_H

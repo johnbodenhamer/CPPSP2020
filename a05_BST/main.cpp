@@ -17,6 +17,8 @@ void updateCategoryDescription(treeNode<Category> *&root);
 
 void getHeight(treeNode<Category> *root);
 
+void deleteCategory(treeNode<Category> *&root);
+
 int main()
 {
 
@@ -89,6 +91,8 @@ int process(treeNode<Category> *&root)
                 updateCategoryDescription(root);
                 break;
             case 3:
+                deleteCategory(root);
+                break;
             case 4:
             case 5:
             case 6:
@@ -175,5 +179,26 @@ void updateCategoryDescription(treeNode<Category> *&root)
 void getHeight(treeNode<Category> *root)
 {
     cout << "The Tree's height is: " << height(root) << '\n' <<  endl;
+}
+
+void deleteCategory(treeNode<Category> *&root)
+{
+    bool found;
+    char searchKey;
+    treeNode<Category> * foundNode;
+
+    cout << "Enter a key to delete" << endl;
+
+    cin >> searchKey;
+
+    searchTree(root, foundNode, searchKey, found);
+
+    if(found) {
+        deleteBST(root, searchKey);
+    }
+    else {
+        cout << "Key not found" << endl;
+    }
+
 }
 
