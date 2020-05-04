@@ -11,7 +11,7 @@ int process(treeNode<Category> *&root);
 
 void readCSV(const string fileName, treeNode<Category> *&root);
 
-treeNode<Category>* getNewCategory(treeNode<Category> *&root);
+void getNewCategory(treeNode<Category> *&root);
 int main()
 {
 
@@ -80,6 +80,7 @@ int process(treeNode<Category> *&root)
         switch (choice) {
             case 1:
                 getNewCategory(root);
+                break;
             case 2:
             case 3:
             case 4:
@@ -104,18 +105,29 @@ int process(treeNode<Category> *&root)
 
 void getNewCategory(treeNode<Category> *&root)
 {
-    treeNode<Category>* newNode = nullptr;
-    char sentinel = '0';
+
+    char newKey;
+    string newDesc;
     bool isDone = false;
 
     while(!isDone) {
-        cout << "Enter a character" << endl;
-        cin >> newNode->info.key;
+
+        cout << "Enter a character, press 0 to quit" << endl;
+        cin >> newKey;
+        if (newKey == '0')
+        {
+            isDone = true;
+            break;
+        }
+
         cout << "Enter a description" << endl;
-        cin >> newNode->info.description;
+        cin >> newDesc;
+
+        treeNode<Category>* newNode = new treeNode<Category>;
+        newNode -> info.key = newKey;
+        newNode -> info.description = newDesc;
 
         addBST(root, newNode);
     }
-    return newNode;
 }
 
