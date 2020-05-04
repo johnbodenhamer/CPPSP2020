@@ -138,3 +138,8 @@ void getNewCategory(treeNode<Category> *&root)
     }
 }
 
+void updateCategoryDescription()
+{
+
+}
+

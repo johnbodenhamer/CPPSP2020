@@ -24,10 +24,12 @@ void addBST(treeNode<DT> *&root, treeNode<DT> *newNode)
 {
     if (root == nullptr) {
         root = newNode;
-    } else if (newNode->info < root->info) {
-        addBST(root->left, newNode);
     } else {
-        addBST(root->right, newNode);
+        if (newNode->info < root->info) {
+            addBST(root->left, newNode);
+        } else {
+            addBST(root->right, newNode);
+        }
     }
 }
 
