@@ -55,10 +55,41 @@ template<class DT>
 void preOrder(treeNode<DT> *&root)
 {
     if (root != nullptr) {
-        cout << root->key;
+        cout << root->info << " " << endl;
         preOrder(root->left);
         preOrder(root->right);
     }
+}
+
+template<class DT>
+void postOrder(treeNode<DT> *&root)
+{
+    if (root != nullptr) {
+        postOrder(root->left);
+        postOrder(root->right);
+        cout << root->info << " " << endl;}
+}
+
+template<class DT>
+void inOrder(treeNode<DT> *&root)
+{
+    if (root != nullptr) {
+        inOrder(root->left);
+        cout << root->info << " " << endl;
+        inOrder(root->right);
+    }
+}
+
+
+template<class DT>
+int countNodes(treeNode<DT>* root)
+//  returns the number of nodes in the tree.
+{
+    if (root == nullptr)
+        return 0;
+    else
+        return countNodes(root->left) +
+               countNodes(root->right) + 1;
 }
 
 //***  Find the smallest value
@@ -146,7 +177,7 @@ void searchTree(treeNode<DT> *root, treeNode<DT> *&returnNode, char &item, bool 
  			tempPtr=root->left;
  			while(tempPtr->right != nullptr)
  				tempPtr=tempPtr->right;
- 			root->info.key = tempPtr->info.key;
+ 			root->info = tempPtr->info;
  			deleteBST(root->left,tempPtr->info.key);
  		}
  	}

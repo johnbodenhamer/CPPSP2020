@@ -19,10 +19,16 @@ void getHeight(treeNode<Category> *root);
 
 void deleteCategory(treeNode<Category> *&root);
 
+void searchCategory(treeNode<Category> *&root);
+
+void getSmallestCategory(treeNode<Category> *root);
+
+void getLargestCategory(treeNode<Category> *root);
+
 int main()
 {
 
-    treeNode<Category> *root = NULL;
+    treeNode<Category> *root = nullptr;
 
 
     readCSV("Categories.csv", root);
@@ -94,15 +100,29 @@ int process(treeNode<Category> *&root)
                 deleteCategory(root);
                 break;
             case 4:
+                searchCategory(root);
+                break;
             case 5:
+                cout << countNodes(root) << " nodes in tree" << endl;
+                break;
             case 6:
+                getSmallestCategory(root);
+                break;
             case 7:
+                getLargestCategory(root);
+                break;
             case 8:
                 getHeight(root);
                 break;
             case 9:
+                inOrder(root);
+                break;
             case 10:
+                preOrder(root);
+                break;
             case 11:
+                postOrder(root);
+                break;
             case 12:
                 graphAux(15, root);
                 break;
@@ -202,3 +222,38 @@ void deleteCategory(treeNode<Category> *&root)
 
 }
 
+void searchCategory(treeNode<Category> *&root)
+{
+    bool found;
+    char searchKey;
+    treeNode<Category> * foundNode;
+
+    cout << "Enter a key to search" << endl;
+
+    cin >> searchKey;
+
+    searchTree(root, foundNode, searchKey, found);
+
+    if(found) {
+        cout << foundNode -> info << endl;
+    }
+    else {
+        cout << "Key not found" << endl;
+    }
+}
+
+void getSmallestCategory(treeNode<Category> *root)
+{
+    treeNode<Category> * foundNode;
+    foundNode = smallestNode(root);
+
+    cout << "The smallest category is: " << foundNode -> info << endl;
+}
+
+void getLargestCategory(treeNode<Category> *root)
+{
+    treeNode<Category> * foundNode;
+    foundNode = largestNode(root);
+
+    cout << "The largest category is: " << foundNode -> info << endl;
+}
