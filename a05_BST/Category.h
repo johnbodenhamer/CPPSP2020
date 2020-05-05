@@ -5,34 +5,39 @@
 #ifndef A05_BST_CATEGORY_H
 #define A05_BST_CATEGORY_H
 
-struct Category {
+struct Category
+{
     char key;
     string description;
-    friend ostream & operator << (ostream & out, const Category & data);
-    bool operator  == (const Category & data) const;
-    bool operator > (const Category & data) const;
-    bool operator < (const Category & data) const;
+
+    friend ostream &operator<<(ostream &out, const Category &data);
+
+    bool operator==(const Category &data) const;
+
+    bool operator>(const Category &data) const;
+
+    bool operator<(const Category &data) const;
 };
 
-ostream & operator << (ostream & out, const Category & data)
+ostream &operator<<(ostream &out, const Category &data)
 {
     out << data.key << " " << data.description;
     return out;
 }
 
-bool Category :: operator  == (const Category & data) const
+bool Category::operator==(const Category &data) const
 {
-    return (this -> key == data.key);
+    return (this->key == data.key);
 }
 
-bool Category :: operator  > (const Category & data) const
+bool Category::operator>(const Category &data) const
 {
-    return (this -> key > data.key);
+    return (this->key > data.key);
 }
 
-bool Category :: operator  < (const Category & data) const
+bool Category::operator<(const Category &data) const
 {
-    return (this -> key < data.key);
+    return (this->key < data.key);
 }
 
 #endif //A05_BST_CATEGORY_H

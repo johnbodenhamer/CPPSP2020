@@ -7,7 +7,7 @@ using namespace std;
 #include "Tree.h"
 #include "Category.h"
 
-int process(treeNode<Category> *&root);
+string process(treeNode<Category> *&root);
 
 void readCSV(const string fileName, treeNode<Category> *&root);
 
@@ -60,9 +60,9 @@ void readCSV(const string fileName, treeNode<Category> *&root)
 }
 
 
-int process(treeNode<Category> *&root)
+string process(treeNode<Category> *&root)
 {
-    int choice;
+    string choice;
     bool isDone = false;
 
     do {
@@ -83,13 +83,13 @@ int process(treeNode<Category> *&root)
 
         cin >> choice;
 
-        if (choice < 1 || choice > 13) {
+        if (stoi(choice) < 1 || stoi(choice) > 13) {
             cout << choice << " is an invalid choice\n"
                  << "Please try again: ";
             continue;
         }
 
-        switch (choice) {
+        switch (stoi(choice)) {
             case 1:
                 getNewCategory(root);
                 break;
@@ -137,7 +137,7 @@ int process(treeNode<Category> *&root)
 
 void getNewCategory(treeNode<Category> *&root)
 {
-    treeNode<Category> * foundNode;
+    treeNode<Category> *foundNode;
 
     char newKey;
     string newDesc;
@@ -155,8 +155,7 @@ void getNewCategory(treeNode<Category> *&root)
 
         searchTree(root, foundNode, newKey, found);
 
-        if (found)
-        {
+        if (found) {
             cout << "Already Exists, try again" << endl;
             continue;
         }
@@ -176,7 +175,7 @@ void updateCategoryDescription(treeNode<Category> *&root)
     bool found;
     char searchKey;
     string newDesc;
-    treeNode<Category> * foundNode;
+    treeNode<Category> *foundNode;
 
     cout << "Enter a Key to update" << endl;
 
@@ -184,13 +183,12 @@ void updateCategoryDescription(treeNode<Category> *&root)
 
     searchTree(root, foundNode, searchKey, found);
 
-    if(found){
+    if (found) {
         cout << "Current Description: " << foundNode->info.description << endl;
         cout << "Enter a new Description: ";
         cin >> newDesc;
         foundNode->info.description = newDesc;
-    }
-    else {
+    } else {
         cout << "Node not found!" << endl;
     }
 
@@ -198,14 +196,14 @@ void updateCategoryDescription(treeNode<Category> *&root)
 
 void getHeight(treeNode<Category> *root)
 {
-    cout << "The Tree's height is: " << height(root) << '\n' <<  endl;
+    cout << "The Tree's height is: " << height(root) << '\n' << endl;
 }
 
 void deleteCategory(treeNode<Category> *&root)
 {
     bool found;
     char searchKey;
-    treeNode<Category> * foundNode;
+    treeNode<Category> *foundNode;
 
     cout << "Enter a key to delete" << endl;
 
@@ -213,10 +211,9 @@ void deleteCategory(treeNode<Category> *&root)
 
     searchTree(root, foundNode, searchKey, found);
 
-    if(found) {
+    if (found) {
         deleteBST(root, searchKey);
-    }
-    else {
+    } else {
         cout << "Key not found" << endl;
     }
 
@@ -226,7 +223,7 @@ void searchCategory(treeNode<Category> *&root)
 {
     bool found;
     char searchKey;
-    treeNode<Category> * foundNode;
+    treeNode<Category> *foundNode;
 
     cout << "Enter a key to search" << endl;
 
@@ -234,26 +231,25 @@ void searchCategory(treeNode<Category> *&root)
 
     searchTree(root, foundNode, searchKey, found);
 
-    if(found) {
-        cout << foundNode -> info << endl;
-    }
-    else {
+    if (found) {
+        cout << foundNode->info << endl;
+    } else {
         cout << "Key not found" << endl;
     }
 }
 
 void getSmallestCategory(treeNode<Category> *root)
 {
-    treeNode<Category> * foundNode;
+    treeNode<Category> *foundNode;
     foundNode = smallestNode(root);
 
-    cout << "The smallest category is: " << foundNode -> info << endl;
+    cout << "The smallest category is: " << foundNode->info << endl;
 }
 
 void getLargestCategory(treeNode<Category> *root)
 {
-    treeNode<Category> * foundNode;
+    treeNode<Category> *foundNode;
     foundNode = largestNode(root);
 
-    cout << "The largest category is: " << foundNode -> info << endl;
+    cout << "The largest category is: " << foundNode->info << endl;
 }
