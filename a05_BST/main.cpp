@@ -84,7 +84,7 @@ int process(treeNode<Category> *&root)
         cin >> choice;
 
         if (choice < 1 || choice > 13) {
-            cout << "\aInvalid choice\n"
+            cout << choice << " is an invalid choice\n"
                  << "Please try again: ";
             continue;
         }
