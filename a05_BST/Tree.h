@@ -125,7 +125,7 @@ void  Tree<DT>::add(DT item)
 
 //***   Display the tree graphically
 template<class DT>
-void graphAux(int indent, Node<DT> *root)
+void Tree<DT>::graphAux(int indent, Node<DT> *root)
 {
     if (root != nullptr) {
         graphAux(indent + 8, root->right);
@@ -141,7 +141,7 @@ void Tree<DT>::graph()
 }
 
 template<class DT>
-void prePrint(Node<DT> *&root)
+void Tree<DT>::prePrint(Node<DT> *root)
 {
     if (root != nullptr) {
         cout << root->info << " " << endl;
@@ -157,7 +157,7 @@ void Tree<DT>::printPre()
 }
 
 template<class DT>
-void postPrint(Node<DT> *&root)
+void Tree<DT>::postPrint(Node<DT> *root)
 {
     if (root != nullptr) {
         postPrint(root->left);
@@ -173,7 +173,7 @@ void Tree<DT>::printPost()
 }
 
 template<class DT>
-void inPrint(Node<DT> *&root)
+void Tree<DT>::inPrint(Node<DT> *root)
 {
     if (root != nullptr) {
         inPrint(root->left);
@@ -186,6 +186,21 @@ template <class DT>
 void Tree<DT>::printIn()
 {
     inPrint(root);
+}
+
+template<class DT>
+int Tree<DT>::height(Node<DT> *root)
+{
+    if (root == nullptr)
+        return 0;
+    else
+        return 1 + max(height(root->left), height(root->right));
+}
+
+template <class DT>
+int Tree<DT>::treeHeight()
+{
+    return height(root);
 }
 
 template<class DT>
@@ -248,24 +263,9 @@ int max(int first, int second)
         return second;
 }
 
-template<class DT>
-int height(Node<DT> *root)
-{
-    if (root == nullptr)
-        return 0;
-    else
-        return 1 + max(height(root->left), height(root->right));
-}
-
-template <class DT>
-int Tree<DT>::treeHeight()
-{
-    return height(root);
-}
-
 //***   Search for a value in the tree
 template<class DT>
-void searchTree(Node<DT> *root, char &item, bool &found)
+void Tree<DT>::searchTree(Node<DT> *root, DT &item, bool &found)
 {
     if (root == nullptr)
         found = false;        // item is not found.
@@ -290,7 +290,7 @@ bool Tree<DT>::search(DT &item)
 }
 
 template<class DT>
-void updateTree(Node<DT> *root, char &item, bool &found)
+void Tree<DT>::updateTree(Node<DT> *root, DT &item, bool &found)
 {
     if (root == nullptr)
         found = false;        // item is not found.
@@ -317,7 +317,7 @@ bool Tree<DT>::update(DT item)
 
 // Deletes item from tree.
 template<class DT>
-void deleteBST(Node<DT> *&root, char item)
+void Tree<DT>::deleteBST(Node<DT> *&root, char item)
 {
     Node<DT> *tempPtr;
     if (item < root->info.key)
@@ -356,7 +356,5 @@ bool Tree<DT>::remove(DT item)
 
     return found;
 }
-
-
 
 #endif //A05_BST_TREE_H
