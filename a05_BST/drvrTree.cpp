@@ -7,37 +7,29 @@ using namespace std;
 #include "Tree.h"
 #include "Category.h"
 
-string process(treeNode<Category> *&root);
+string process(Tree<Category> myTree);
 
-void readCSV(const string fileName, treeNode<Category> *&root);
+void readCSV(const string fileName, Tree<Category> myTree);
 
-void getNewCategory(treeNode<Category> *&root);
+void getNewCategory(Tree<Category> myTree);
 
-void updateCategoryDescription(treeNode<Category> *&root);
+void updateCategoryDescription(Tree<Category> myTree);
 
-void getHeight(treeNode<Category> *root);
+void deleteCategory(Tree<Category> myTree);
 
-void deleteCategory(treeNode<Category> *&root);
-
-void searchCategory(treeNode<Category> *&root);
-
-void getSmallestCategory(treeNode<Category> *root);
-
-void getLargestCategory(treeNode<Category> *root);
+void searchCategory(Tree<Category> myTree);
 
 int main()
 {
+    Tree<Category> myTree;
 
-    treeNode<Category> *root = nullptr;
+    readCSV("Categories.csv", myTree);
 
-
-    readCSV("Categories.csv", root);
-
-    process(root);
+    process(myTree);
     return 0;
 }
 
-void readCSV(const string fileName, treeNode<Category> *&root)
+void readCSV(const string fileName, Tree<Category> myTree)
 {
 
     Category c;
@@ -48,11 +40,11 @@ void readCSV(const string fileName, treeNode<Category> *&root)
     fileIn.open(fileName);
 
     while (getline(fileIn, cStr, ',')) {
-        treeNode<Category> *newNode = new treeNode<Category>;
-        newNode->info.key = cStr[0];
+        Tree<Category> *newTree = new Tree<Category>;
+        c.key = cStr[0];
         getline(fileIn, cStr, '\n');
-        newNode->info.description = cStr.substr(0, cStr.length() - 1);
-        addBST(root, newNode);
+        c.description = cStr.substr(0, cStr.length() - 1);
+        myTree.add(c);
         i++;
     }
 
@@ -60,7 +52,7 @@ void readCSV(const string fileName, treeNode<Category> *&root)
 }
 
 
-string process(treeNode<Category> *&root)
+string process(Tree<Category> myTree)
 {
     string choice;
     bool isDone = false;
@@ -91,40 +83,40 @@ string process(treeNode<Category> *&root)
 
         switch (stoi(choice)) {
             case 1:
-                getNewCategory(root);
+                getNewCategory(myTree);
                 break;
             case 2:
-                updateCategoryDescription(root);
+                updateCategoryDescription(myTree);
                 break;
             case 3:
-                deleteCategory(root);
+                deleteCategory(myTree);
                 break;
             case 4:
-                searchCategory(root);
+                searchCategory(myTree);
                 break;
             case 5:
-                cout << countNodes(root) << " nodes in tree" << endl;
+                cout << myTree.numberOfNodes() << " nodes in tree" << endl;
                 break;
             case 6:
-                getSmallestCategory(root);
+                cout << "The smallest category is: " << myTree.smallest() << endl;
                 break;
             case 7:
-                getLargestCategory(root);
+                cout << "The largest category is: " << myTree.largest() << '\n' << endl;
                 break;
             case 8:
-                getHeight(root);
+                cout << "The Tree's height is: " << myTree.treeHeight() << '\n' << endl;
                 break;
             case 9:
-                inOrder(root);
+                myTree.printIn();
                 break;
             case 10:
-                preOrder(root);
+                myTree.printPre();
                 break;
             case 11:
-                postOrder(root);
+                myTree.printPost();
                 break;
             case 12:
-                graphAux(15, root);
+                myTree.graph();
                 break;
             case 13:
                 isDone = true;
@@ -135,14 +127,12 @@ string process(treeNode<Category> *&root)
     return choice;
 }
 
-void getNewCategory(treeNode<Category> *&root)
+void getNewCategory(Tree<Category> myTree)
 {
-    treeNode<Category> *foundNode;
-
+    Category c;
     char newKey;
     string newDesc;
     bool isDone = false;
-    bool found;
 
     while (!isDone) {
 
@@ -153,103 +143,70 @@ void getNewCategory(treeNode<Category> *&root)
             break;
         }
 
-        searchTree(root, foundNode, newKey, found);
-
-        if (found) {
+        if (myTree.search(c)) {
             cout << "Already Exists, try again" << endl;
             continue;
         }
         cout << "Enter a description" << endl;
         cin >> newDesc;
 
-        treeNode<Category> *newNode = new treeNode<Category>;
-        newNode->info.key = newKey;
-        newNode->info.description = newDesc;
+        c.description = newDesc;
 
-        addBST(root, newNode);
+        myTree.add(c);
     }
 }
 
-void updateCategoryDescription(treeNode<Category> *&root)
+void updateCategoryDescription(Tree<Category> myTree)
 {
-    bool found;
     char searchKey;
     string newDesc;
-    treeNode<Category> *foundNode;
+    Category c;
 
     cout << "Enter a Key to update" << endl;
-
     cin >> searchKey;
 
-    searchTree(root, foundNode, searchKey, found);
-
-    if (found) {
-        cout << "Current Description: " << foundNode->info.description << endl;
+    if (myTree.search(c)) {
+        cout << "Current Description: " << c.description << endl;
         cout << "Enter a new Description: ";
         cin >> newDesc;
-        foundNode->info.description = newDesc;
+        c.description = newDesc;
+        myTree.update(c);
     } else {
-        cout << "Node not found!" << endl;
+        cout << "Tree not found!" << endl;
     }
 
 }
 
-void getHeight(treeNode<Category> *root)
+void deleteCategory(Tree<Category> myTree)
 {
-    cout << "The Tree's height is: " << height(root) << '\n' << endl;
-}
-
-void deleteCategory(treeNode<Category> *&root)
-{
-    bool found;
-    char searchKey;
-    treeNode<Category> *foundNode;
+    Category c;
 
     cout << "Enter a key to delete" << endl;
 
-    cin >> searchKey;
+    cin >> c.key;
 
-    searchTree(root, foundNode, searchKey, found);
-
-    if (found) {
-        deleteBST(root, searchKey);
+    if (myTree.remove(c)) {
+        cout << "Category " << c << " deleted" << endl;
     } else {
         cout << "Key not found" << endl;
     }
 
 }
 
-void searchCategory(treeNode<Category> *&root)
+void searchCategory(Tree<Category> myTree)
 {
     bool found;
-    char searchKey;
-    treeNode<Category> *foundNode;
+    Category c;
 
     cout << "Enter a key to search" << endl;
 
-    cin >> searchKey;
+    cin >> c.key;
 
-    searchTree(root, foundNode, searchKey, found);
-
-    if (found) {
-        cout << foundNode->info << endl;
+    if (myTree.search(c)) {
+        cout << c << endl;
     } else {
         cout << "Key not found" << endl;
     }
 }
 
-void getSmallestCategory(treeNode<Category> *root)
-{
-    treeNode<Category> *foundNode;
-    foundNode = smallestNode(root);
 
-    cout << "The smallest category is: " << foundNode->info << endl;
-}
-
-void getLargestCategory(treeNode<Category> *root)
-{
-    treeNode<Category> *foundNode;
-    foundNode = largestNode(root);
-
-    cout << "The largest category is: " << foundNode->info << endl;
-}
