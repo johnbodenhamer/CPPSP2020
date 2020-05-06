@@ -255,7 +255,7 @@ DT Tree<DT>:: largest()
 
 //*** Height of a tree (including max function)
 template<class DT>
-int max(int first, int second)
+int Tree<DT>::max(int first, int second)
 {
     if (first > second)
         return first;
@@ -269,9 +269,9 @@ void Tree<DT>::searchTree(Node<DT> *root, DT &item, bool &found)
 {
     if (root == nullptr)
         found = false;        // item is not found.
-    else if (item < root->info.key)    // Search left subtree.
+    else if (item < root->info)    // Search left subtree.
         searchTree(root->left, item, found);
-    else if (item > root->info.key)    // Search right subtree
+    else if (item > root->info)    // Search right subtree
         searchTree(root->right, item, found);
     else {
         item = root->info;            // item is found.
@@ -294,9 +294,9 @@ void Tree<DT>::updateTree(Node<DT> *root, DT &item, bool &found)
 {
     if (root == nullptr)
         found = false;        // item is not found.
-    else if (item < root->info.key)    // Search left subtree.
+    else if (item < root->info)    // Search left subtree.
         updateTree(root->left, item, found);
-    else if (item > root->info.key)    // Search right subtree
+    else if (item > root->info)    // Search right subtree
         updateTree(root->right, item, found);
     else {
         root->info = item;            // item is found.
@@ -317,12 +317,12 @@ bool Tree<DT>::update(DT item)
 
 // Deletes item from tree.
 template<class DT>
-void Tree<DT>::deleteBST(Node<DT> *&root, char item)
+void Tree<DT>::deleteBST(Node<DT> *&root, DT item)
 {
     Node<DT> *tempPtr;
-    if (item < root->info.key)
+    if (item < root->info)
         deleteBST(root->left, item);
-    else if (item > root->info.key)
+    else if (item > root->info)
         deleteBST(root->right, item);
     else
         //****   item==root->key  ****
@@ -340,7 +340,7 @@ void Tree<DT>::deleteBST(Node<DT> *&root, char item)
             while (tempPtr->right != nullptr)
                 tempPtr = tempPtr->right;
             root->info = tempPtr->info;
-            deleteBST(root->left, tempPtr->info.key);
+            deleteBST(root->left, tempPtr->info);
         }
     }
 }
