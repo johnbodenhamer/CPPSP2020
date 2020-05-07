@@ -7,15 +7,15 @@ using namespace std;
 #include "Tree.h"
 #include "Category.h"
 
-string process(Tree<Category> myTree);
+string process(Tree<Category> &myTree);
 
-void readCSV(const string fileName, Tree<Category> myTree);
+void readCSV(const string fileName, Tree<Category> &myTree);
 
-void getNewCategory(Tree<Category> myTree);
+void getNewCategory(Tree<Category> &myTree);
 
-void updateCategoryDescription(Tree<Category> myTree);
+void updateCategoryDescription(Tree<Category> &myTree);
 
-void deleteCategory(Tree<Category> myTree);
+void deleteCategory(Tree<Category> &myTree);
 
 void searchCategory(Tree<Category> myTree);
 
@@ -29,7 +29,7 @@ int main()
     return 0;
 }
 
-void readCSV(const string fileName, Tree<Category> myTree)
+void readCSV(const string fileName, Tree<Category> &myTree)
 {
 
     Category c;
@@ -40,7 +40,6 @@ void readCSV(const string fileName, Tree<Category> myTree)
     fileIn.open(fileName);
 
     while (getline(fileIn, cStr, ',')) {
-        Tree<Category> *newTree = new Tree<Category>;
         c.key = cStr[0];
         getline(fileIn, cStr, '\n');
         c.description = cStr.substr(0, cStr.length() - 1);
@@ -52,7 +51,7 @@ void readCSV(const string fileName, Tree<Category> myTree)
 }
 
 
-string process(Tree<Category> myTree)
+string process(Tree<Category> &myTree)
 {
     string choice;
     bool isDone = false;
@@ -127,18 +126,17 @@ string process(Tree<Category> myTree)
     return choice;
 }
 
-void getNewCategory(Tree<Category> myTree)
+void getNewCategory(Tree<Category> &myTree)
 {
     Category c;
-    char newKey;
     string newDesc;
     bool isDone = false;
 
     while (!isDone) {
 
         cout << "Enter a character, press 0 to quit" << endl;
-        cin >> newKey;
-        if (newKey == '0') {
+        cin >> c.key;
+        if (c.key == '0') {
             isDone = true;
             break;
         }
@@ -156,14 +154,13 @@ void getNewCategory(Tree<Category> myTree)
     }
 }
 
-void updateCategoryDescription(Tree<Category> myTree)
+void updateCategoryDescription(Tree<Category> &myTree)
 {
-    char searchKey;
     string newDesc;
     Category c;
 
     cout << "Enter a Key to update" << endl;
-    cin >> searchKey;
+    cin >> c.key;
 
     if (myTree.search(c)) {
         cout << "Current Description: " << c.description << endl;
@@ -172,12 +169,12 @@ void updateCategoryDescription(Tree<Category> myTree)
         c.description = newDesc;
         myTree.update(c);
     } else {
-        cout << "Tree not found!" << endl;
+        cout << "Key not found!" << endl;
     }
 
 }
 
-void deleteCategory(Tree<Category> myTree)
+void deleteCategory(Tree<Category> &myTree)
 {
     Category c;
 
@@ -195,7 +192,6 @@ void deleteCategory(Tree<Category> myTree)
 
 void searchCategory(Tree<Category> myTree)
 {
-    bool found;
     Category c;
 
     cout << "Enter a key to search" << endl;

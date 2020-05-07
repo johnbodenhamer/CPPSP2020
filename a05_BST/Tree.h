@@ -105,6 +105,8 @@ void  Tree<DT>::addBST(Node<DT> *&root, DT item)
 {
     Node<DT> * newNode = new Node<DT>;
     newNode -> info = item;
+    newNode -> left = nullptr;
+    newNode -> right = nullptr;
 
     if (root == nullptr) {
         root = newNode;
